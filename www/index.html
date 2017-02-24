@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-eval' 'unsafe-inline'; img-src 'self' data:">
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+    <script type="text/javascript" src="cordova.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+    <script src="res/jquery/jquery-1.11.1.min.js"></script>
+    <script src="res/jquery/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="res/jquery/jquery.mobile.structure-1.4.5.min.css">
+
+    <script src="res/jquery/jquery.jqplot.min.js"></script>
+    <script src="res/jquery/plugins/jqplot.barRenderer.min.js"></script>
+    <script src="res/jquery/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+    <script src="res/jquery/plugins/jqplot.pointLabels.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="res/jquery/jquery.jqplot.min.css"/>
+    <script type="text/javascript" src="js/session.js"></script>
+    <script type="text/javascript" src="js/SignInController.js"></script>
+    <script type="text/javascript" src="js/SignUpController.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+    <title>MyHealth</title>
+</head>
+
+<body>
+
+    <div data-role="page" id="page-index" class="background">
+        <div data-role="header" data-theme="c" data-position="fixed">
+            <h1>My Health App</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <h2 class="mc-text-center">Welcome!</h2>
+            <p class="mc-top-margin-1-5"><b>Existing Users</b></p>
+            <a href="#sign-in" class="ui-btn ui-btn-b ui-corner-all">Sign In</a>
+            <p class="mc-top-margin-1-5"><b>No Account?</b></p>
+            <a href="#sign-up" class="ui-btn ui-btn-b ui-corner-all">Sign Up</a>
+            <p></p>
+        </div>
+    </div>
+
+    <div data-role="page" id="sign-up" class="background">
+        <div data-role="header" data-theme="c">
+            <h1>User Registration</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <div id="ctn-err" class="bi-invisible"></div>
+            <label for="txt-first-name">First Name</label>
+            <input type="text" name="txt-first-name" id="txt-first-name" value="">
+            <label for="txt-last-name">Last Name</label>
+            <input type="text" name="txt-last-name" id="txt-last-name" value="">
+            <label for="txt-email-address">Email Address</label>
+            <input type="text" name="txt-email-address" id="txt-email-address" value="">
+            <label for="txt-password">Password</label>
+            <input type="password" name="txt-password" id="txt-password" value="">
+            <label for="txt-password-confirm">Confirm Password</label>
+            <input type="password" name="txt-password-confirm" id="txt-password-confirm" value="">
+
+            <a id="submit" href="#sign-in" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
+        </div>
+    </div>
+
+    <div class="background" id="sign-in" data-role="page">
+        <div data-role="header" data-theme="c" data-position="fixed">
+            <a href="#page-index" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
+            <h1>Login</h1>
+        </div>
+
+        <div role="main" class="ui-content">
+            <h3>Sign In</h3>
+            <div id="errCtn" class="bi-invisible"></div>
+            <label for="emailAddress">Email Address</label>
+            <input type="text" name="emailAddress" id="emailAddress" value="">
+            <label for="passwordTxt">Password</label>
+            <input type="password" name="passwordTxt" id="passwordTxt" value="">
+            <fieldset data-role="controlgroup">
+                <label><input type="checkbox" name="signed-in" id="signed-in"> Keep me signed in</label>
+            </fieldset>
+            <p class="mc-top-margin-1-5"><a href="#begin-password-reset">Forgot Password?</a></p>
+            <a href="#mainPage" data-position-to="window" id="submitButton" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
+            <p class="mc-top-margin-1-5"><b>No Account?</b></p>
+            <p class="mc-top-margin-1-5"><a href="#sign-up">Sign Up</a></p>
+        </div>
+    </div>
+
+    <div data-role="page" id="begin-password-reset" class="background">
+        <div data-role="header" data-theme="c">
+            <h1>Reset Password</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <h3>Password Reset</h3>
+            <label for="txt-email">Enter your email address</label>
+            <input type="text" name="txt-email" id="txt-email" value="">
+            <a href="#sign-in" data-position-to="window" id="resetsubmit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
+            <div data-role="popup" id="dlg-pwd-reset-sent" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header">
+                    <h1>Password Reset</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <h3>Check Your Inbox</h3>
+                    <p>Follow the Intstructions on the email to reset your password</p>
+                    <div class="mc-text-center"><a href="#end-password-reset" class="ui-btn ui-corner-all ui-shadow ui-btn-b mc-top-margin-1-5">OK</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="end-password-reset" class="background">
+        <div data-role="header" data-theme="c">
+            <h1>Password Reset</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <h3>Reset Password</h3>
+            <label for="txt-new-password">New Password</label>
+            <input type="password" name="txt-new-password" id="txt-new-password" value="">
+            <label for="txt-new-password-confirm">Confirm New Password</label>
+            <input type="password" name="txt-new-password-confirm" id="txt-new-password-confirm" value="">
+            <a href="#" data-position-to="window" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
+            <div data-role="popup" id="dlg-pwd-changed" data-dismissible="false" style="max-width:400px;">
+            </div>
+        </div>
+    </div>
+
+    <div class="background" id="mainPage" data-role="page">
+        <div data-role="header" id="mainHeader" data-position="fixed">
+            <a href="#statsPage" id="toStats" class="ui-btn" data-transition="slide">MyStats</a>
+        </div>
+        <div class="app">
+            <h1>MyHealth</h1>
+            <div id="deviceready" class="blink">
+                <p class="event listening">Connecting to Device</p>
+                <p class="event received">TRACKING DATA</p>
+            </div>
+
+            <div id="data">
+                <p id="lat">Latitude: </p>
+                <p id="long">Longitude: </p>
+                <p id="speed">Speed: </p>
+                <p id="steps">Steps: </p>
+                <p id="heartRate">Heart Rate: </p>
+            </div>
+            <button id="measureBPM">MyBPM</button>
+        </div>
+
+        <div data-role="footer" id="mainFooter" data-position="fixed">
+            <h4 id="credits">2017 COMP-5413-WA | Instructor: Dr. Mago</h4>
+        </div>
+    </div>
+
+    <div class="background" id="statsPage" data-role="page">
+        <div data-role="header" id="statsHeader">
+            <a href="#mainPage" id="toMain" class="ui-btn" data-transition="slide" data-direction="reverse">Back</a>
+            <a href="#timePopContent" id="myTime" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all">Time</a>
+
+            <div data-role="popup" id="timePopContent" class="ui-content">
+                <fieldset id="radioChoices" data-role="controlgroup" data-mini="true">
+                    <legend>Retrieve Data For Time Period:</legend>
+                    <input type="radio" name="radio-choice-v-6" id="radio-choice-v-6a" value="on" checked="checked">
+                    <label for="radio-choice-v-6a">1 Week</label>
+                    <input type="radio" name="radio-choice-v-6" id="radio-choice-v-6b" value="off">
+                    <label for="radio-choice-v-6b">3 Days</label>
+                    <input type="radio" name="radio-choice-v-6" id="radio-choice-v-6c" value="other">
+                    <label for="radio-choice-v-6c">1 Day</label>
+                    <input type="radio" name="radio-choice-v-6" id="radio-choice-v-6d" value="other">
+                    <label for="radio-choice-v-6d">1 Hour</label>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div id="statsContainer" data-role="none">
+        <div id="visitStats" style="height:50%;width:100%;margin-top:10%;margin-left:1%"></div>
+        <div id="healthStats" style="height:50%;width:100%;margin-left:1%"></div>
+    </div>
+</body>
+
+</html>
