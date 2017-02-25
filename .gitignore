@@ -47,3 +47,5 @@ fabric.properties
 .idea/
 /platforms/*
 /platforms/android/*
+/hooks/*
+/plugins/*
