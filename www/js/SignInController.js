@@ -81,5 +81,26 @@ SignIn.SignInController.prototype.onSignIn = function () {
         return;
     }
 
-    $.mobile.navigate(this.mainMenuPageId, {transition: "slideup"});
+    console.log("Login details okay...");
+    console.log("Attempting to login user...");
+    $.ajax({
+        type: 'GET',
+        url: 'http://138.197.130.124/verifyLogin.php',
+        data: {
+            emailAddress: emailAddress,
+            password: password
+        },
+        dataType: 'json',
+        success: function(authToken){
+            console.log(authToken);
+            console.log("Logged in user successfully");
+            //Get the auth token
+            $.mobile.navigate("#mainPage", {transition: "slideup"});
+        },
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log("Error Code: " + xhr.status);
+            console.log("Error Response: " + xhr.responseText);
+            console.log("Thrown Error: " + thrownError);
+        }
+    });
 };

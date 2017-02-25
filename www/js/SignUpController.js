@@ -110,7 +110,6 @@ SignIn.SignUpController.prototype.onSignUp = function () {
                 console.log("Error Code: " + xhr.status);
                 console.log("Error Response: " + xhr.responseText);
                 console.log("Thrown Error: " + thrownError);
-                callback(false);
             }
         });
 
