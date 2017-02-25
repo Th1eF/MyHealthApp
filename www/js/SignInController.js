@@ -54,6 +54,7 @@ SignIn.SignInController.prototype.onSignIn = function () {
         invisibleStyle = "bi-invisible",
         invalidInputStyle = "bi-invalid-input";
 
+    this.$ctnErr.html("");
     user.$ctnErr.removeClass().addClass(invisibleStyle);
     user.$txtEmailAddress.removeClass(invalidInputStyle);
     user.$txtPassword.removeClass(invalidInputStyle);
@@ -101,6 +102,10 @@ SignIn.SignInController.prototype.onSignIn = function () {
             console.log("Error Code: " + xhr.status);
             console.log("Error Response: " + xhr.responseText);
             console.log("Thrown Error: " + thrownError);
+            user.$ctnErr.html("<p>Invalid login credentials.</p>");
+            user.$ctnErr.addClass("bi-ctn-err").slideDown();
+            user.$txtEmailAddress.addClass(invalidInputStyle);
+            user.$txtPassword.addClass(invalidInputStyle);
         }
     });
 };
