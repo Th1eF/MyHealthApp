@@ -48,8 +48,8 @@ SignIn.SignInController.prototype.resetSignIn = function () {
 SignIn.SignInController.prototype.onSignIn = function () {
 
     var user = this,
-        emailAddress = me.$txtEmailAddress.val().trim(),
-        password = me.$txtPassword.val().trim(),
+        emailAddress = user.$txtEmailAddress.val().trim(),
+        password = user.$txtPassword.val().trim(),
         invalidInput = false,
         invisibleStyle = "bi-invisible",
         invalidInputStyle = "bi-invalid-input";

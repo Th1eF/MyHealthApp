@@ -67,47 +67,6 @@ var app = {
                 });
             });
 
-            $(document).on("pagecontainerbeforeshow", function (event, ui) {
-                if (typeof ui.toPage == "object") {
-                    switch (ui.toPage.attr("id")) {
-                        case "page-signup":
-                            app.signUpController.resetSignUp();
-                            break;
-
-                        case "page-signin":
-                            app.signInController.resetSignIn();
-                            break;
-                    }
-                }
-            });
-
-            $(document).delegate("#sign-in", "pagebeforecreate", function () {
-                app.signInController.init();
-                app.signInController.$btnSubmit.off("tap").on("tap", function () {
-                    app.signInController.onSignIn();
-                });
-            });
-
-            $(document).delegate("#sign-up", "pagebeforecreate", function () {
-                app.signUpController.init();
-                app.signUpController.$Submit.off("tap").on("tap", function () {
-                    app.signInController.onSignUp();
-                });
-            });
-
-            $(document).on("pagecontainerbeforechange", function (event, ui) {
-                if (typeof ui.toPage !== "object") return;
-                switch (ui.toPage.attr("id")) {
-                    case "page-index":
-                        if (!ui.prevPage) {
-                            var session = SignIn.Session.getInstance().get(),
-                                today = new Date();
-                            if (session && session.keepSignedIn && new Date(session.expirationDate).getTime() > today.getTime()) {
-                                ui.toPage = $("#mainPage");                }
-                        }
-                }
-            });
-
             $("#radio-choice-v-6b").click(function(){
                 console.log("3 days");
                 $("#timePopContent").popup('close');
@@ -252,6 +211,35 @@ var app = {
                     }
                 });
             }
+        });
+
+
+        $(document).on("pagecontainerbeforeshow", function (event, ui) {
+            if (typeof ui.toPage == "object") {
+                switch (ui.toPage.attr("id")) {
+                    case "page-signup":
+                        app.signUpController.resetSignUp();
+                        break;
+
+                    case "page-signin":
+                        app.signInController.resetSignIn();
+                        break;
+                }
+            }
+        });
+
+        $('#sign-in').on('pageshow', function (e) {
+            app.signInController.init();
+            app.signInController.$btnSubmit.off("tap").on("tap", function () {
+                app.signInController.onSignIn();
+            });
+        });
+
+        $('#sign-up').on('pageshow', function (e) {
+            app.signUpController.init();
+            app.signUpController.$Submit.off("tap").on("tap", function () {
+                app.signUpController.onSignUp();
+            });
         });
 
         //-----------------------------------------------------------------------

@@ -25,16 +25,16 @@ SignIn.SignUpController.prototype.init = function () {
 
 SignIn.SignUpController.prototype.onSignUp = function () {
     console.log("Test signup button");
-    var firstName = $txtFirstName.val().trim(),
-        lastName = $txtLastName.val().trim(),
-        emailAddress = $txtEmailAddress.val().trim(),
-        password = $txtPassword.val().trim(),
-        passwordConfirm = $txtPasswordConfirm.val().trim(),
+    var firstName = this.$FirstName.val().trim(),
+        lastName = this.$LastName.val().trim(),
+        emailAddress = this.$EmailAddress.val().trim(),
+        password = this.$Password.val().trim(),
+        passwordConfirm = this.$PasswordConfirm.val().trim(),
         invalidInput = false,
         invisibleStyle = "bi-invisible",
         invalidInputStyle = "bi-invalid-input";
 
-    if(SignIn.passwordsMatch(password, passwordConfirm) && SignIn.emailAddressIsValid(emailAddress)){
+    if(this.passwordsMatch(password, passwordConfirm) && this.emailAddressIsValid(emailAddress)){
         console.log("Passwords match and email is valid");
         console.log("Creating new user in database");
         $.ajax({
@@ -48,7 +48,8 @@ SignIn.SignUpController.prototype.onSignUp = function () {
             },
             success: function(){
                 console.log("Created new user successfully");
-                console.log("testing second user success");
+                $.mobile.navigate("#sign-in", {transition: "slideup"});
+
             },
             error: function(xhr, ajaxOptions, thrownError){
                 console.log("Error Code: " + xhr.status);
@@ -57,6 +58,7 @@ SignIn.SignUpController.prototype.onSignUp = function () {
                 callback(false);
             }
         });
+
     }
 };
 
