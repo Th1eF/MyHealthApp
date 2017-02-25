@@ -81,5 +81,5 @@ SignIn.SignInController.prototype.onSignIn = function () {
         return;
     }
 
-    $.mobile.loading("show");
+    $.mobile.navigate(this.mainMenuPageId, {transition: "slideup"});
 };

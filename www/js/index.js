@@ -242,6 +242,18 @@ var app = {
             });
         });
 
+        $('#ToSignIn').on('click', function (e) {
+            $.mobile.navigate("#sign-in", {transition: "slideup"});
+        });
+
+        $('#ToSignUp').on('click', function (e) {
+            $.mobile.navigate("#sign-up", {transition: "slideup"});
+        });
+
+        $('#GoToSignUp').on('click', function (e) {
+           $.mobile.navigate("#sign-up", {transition: "slideup"});
+        });
+
         //-----------------------------------------------------------------------
         //Pedometer
         var lastTimeStamp = new Date().getTime();
