@@ -32,6 +32,30 @@ if($stmt = $link->prepare($statement)){
     $stmt->bind_param("sssss", $auth, $firstName, $lastName, $emailAddress, $password);
     if(!$stmt->execute()) throw new Exception($stmt->error());
     $stmt->free_result();
+    $statement = "SELECT id FROM user WHERE email = ?";
+    if($stmt = $link->prepare($statement)){
+        $stmt->bind_param("s", $emailAddress);
+        if(!$stmt->execute()) throw new Exception($stmt->error());
+        $result = $stmt->get_result();
+        while($row = $result->fetch_assoc()){
+            $ID = $row['id'];
+        }
+        $createTable = "CREATE TABLE `".$ID."` ( ".
+            "timestamp VARCHAR(255) NOT NULL, ".
+            "latitude VARCHAR(255) NOT NULL, ".
+            "longitude VARCHAR(255) NOT NULL, ".
+            "speed VARCHAR(255) NOT NULL, ".
+            "steps VARCHAR(255) NOT NULL, ".
+            "bpm VARCHAR(255) NULL DEFAULT NULL, ".
+            "visit VARCHAR(255) NULL DEFAULT NULL, ".
+            "duration VARCHAR(255) NULL DEFAULT NULL, ".
+            "PRIMARY KEY (timestamp))";
+        $stmt->free_result();
+        if($stmt = $link->prepare($createTable)){
+            if(!$stmt->execute()) $stmt->error();
+            $stmt->free_result();
+        }
+    }
     $stmt->close();
 }
 
