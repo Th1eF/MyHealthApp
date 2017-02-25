@@ -24,6 +24,7 @@ SignIn.SignUpController.prototype.init = function () {
 };
 
 SignIn.SignUpController.prototype.onSignUp = function () {
+    console.log("Test signup button");
     var firstName = $txtFirstName.val().trim(),
         lastName = $txtLastName.val().trim(),
         emailAddress = $txtEmailAddress.val().trim(),
@@ -32,6 +33,31 @@ SignIn.SignUpController.prototype.onSignUp = function () {
         invalidInput = false,
         invisibleStyle = "bi-invisible",
         invalidInputStyle = "bi-invalid-input";
+
+    if(SignIn.passwordsMatch(password, passwordConfirm) && SignIn.emailAddressIsValid(emailAddress)){
+        console.log("Passwords match and email is valid");
+        console.log("Creating new user in database");
+        $.ajax({
+            type: 'POST',
+            url: 'http://138.197.130.124/createNewUser.php',
+            data: {
+                firstName: firstName,
+                lastName: lastName,
+                emailAddress: emailAddress,
+                password: password
+            },
+            success: function(){
+                console.log("Created new user successfully");
+                console.log("testing second user success");
+            },
+            error: function(xhr, ajaxOptions, thrownError){
+                console.log("Error Code: " + xhr.status);
+                console.log("Error Response: " + xhr.responseText);
+                console.log("Thrown Error: " + thrownError);
+                callback(false);
+            }
+        });
+    }
 };
 
 SignIn.SignUpController.prototype.resetSignUp = function () {
@@ -54,7 +80,7 @@ SignIn.SignUpController.prototype.passwordsMatch = function (password, passwordC
     return password === passwordConfirm;
 };
 
-SignIn.SignUpController.prototype.passwordCompexity = function (password) {
+SignIn.SignUpController.prototype.passwordComplexity = function (password) {
     return true;
 };
 

@@ -15,6 +15,8 @@ var app = {
 
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        app.signUpController = new SignIn.SignUpController();
+        app.signInController = new SignIn.SignInController();
 
         $('#toMain').on('click', function(){
             $("#statsContainer").hide();
@@ -63,6 +65,47 @@ var app = {
                         createGraphs(visitStats, healthStats);
                     }
                 });
+            });
+
+            $(document).on("pagecontainerbeforeshow", function (event, ui) {
+                if (typeof ui.toPage == "object") {
+                    switch (ui.toPage.attr("id")) {
+                        case "page-signup":
+                            app.signUpController.resetSignUp();
+                            break;
+
+                        case "page-signin":
+                            app.signInController.resetSignIn();
+                            break;
+                    }
+                }
+            });
+
+            $(document).delegate("#sign-in", "pagebeforecreate", function () {
+                app.signInController.init();
+                app.signInController.$btnSubmit.off("tap").on("tap", function () {
+                    app.signInController.onSignIn();
+                });
+            });
+
+            $(document).delegate("#sign-up", "pagebeforecreate", function () {
+                app.signUpController.init();
+                app.signUpController.$Submit.off("tap").on("tap", function () {
+                    app.signInController.onSignUp();
+                });
+            });
+
+            $(document).on("pagecontainerbeforechange", function (event, ui) {
+                if (typeof ui.toPage !== "object") return;
+                switch (ui.toPage.attr("id")) {
+                    case "page-index":
+                        if (!ui.prevPage) {
+                            var session = SignIn.Session.getInstance().get(),
+                                today = new Date();
+                            if (session && session.keepSignedIn && new Date(session.expirationDate).getTime() > today.getTime()) {
+                                ui.toPage = $("#mainPage");                }
+                        }
+                }
             });
 
             $("#radio-choice-v-6b").click(function(){
@@ -246,9 +289,15 @@ var app = {
             }
         };
 
+        pedometer.isStepCountingAvailable(function(){
+            console.log( "Pedometer step counting is available" );
+        }, function(){
+            console.log( "Pedometer step counting is NOT available" );
+        });
+
         var pedometerError = function(error){
             console.log('error: ' + error)
-        }
+        };
         pedometer.startPedometerUpdates(pedometerSuccess, pedometerError);
         //Pedometer
         //-----------------------------------------------------------------------
@@ -284,7 +333,7 @@ var app = {
         var geoOptions = {
             maximumAge: 3600000,
             timeout: 1000,
-            enableHighAccuracy: true,
+            enableHighAccuracy: true
         };
 
         navigator.geolocation.watchPosition(geoSuccess, geoError, geoOptions);
@@ -297,9 +346,9 @@ var app = {
             function heartSuccess(bpm){
                 $('#heartRate').text('Heart Rate: ' + bpm);
 
-                uploadData(lastTimeStamp, lastLat, lastLong, lastSpeed, lastStep, bpm, "", "", function(callback){
+                /*uploadData(lastTimeStamp, lastLat, lastLong, lastSpeed, lastStep, bpm, "", "", function(callback){
                    console.log(callback);
-                });
+                });*/
             }
 
             function heartError(){
@@ -315,7 +364,7 @@ var app = {
         });
 
         //Send data to cloud database
-        function uploadData(timestamp, latitude, longitude, speed, steps, bpm, visit, duration, callback){
+        /*function uploadData(timestamp, latitude, longitude, speed, steps, bpm, visit, duration, callback){
             $.ajax({
                 type: 'POST',
                 url: 'http://138.197.130.124/uploadData.php',
@@ -337,7 +386,7 @@ var app = {
                     callback(false);
                 }
             });
-        }
+        }*/
 
         //Get data from cloud database
         function getData(datePast, dateCurr, callback) {
@@ -370,8 +419,7 @@ var app = {
                     Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
                     Math.sin(dLon/2) * Math.sin(dLon/2);
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            var d = R * c; // Distance in km
-            return d;
+            return R * c
         }
 
         function deg2rad(deg) {
@@ -449,7 +497,7 @@ var app = {
                 return false;
             }
         }
-
+        /*
         window.setInterval(function(){
             var mcTime = checkMcDonalds();
             var lakeheadTime = checkLakehead();
@@ -468,7 +516,7 @@ var app = {
             uploadData(lastTimeStamp, lastLat, lastLong, lastSpeed, lastStep, "", "", "", function(callback){
                 console.log(callback);
             });
-        }, 1000)
+        }, 1000)*/
     },
 
 
@@ -484,3 +532,5 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
+
+app.initialize();

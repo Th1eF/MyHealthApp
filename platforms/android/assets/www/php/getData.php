@@ -11,19 +11,9 @@ if (!$link) {
     exit;
 }
 
-/*
-$bpmStatement = "SELECT DISTINCT bpm, AVG(bpm) AS avgBPM FROM user_info WHERE timestamp >= 1479163093000 AND timestamp <= 1479254879639 AND bpm != ''";
-
-$mcStatement = "SELECT visit, AVG(duration) AS McDur, COUNT(*) AS totalVisits FROM user_info WHERE timestamp >= 1479163093000 AND timestamp <= 1479254879639 AND visit = 'McDonalds'";
-
-$luStatement = "SELECT visit, AVG(duration) AS luDur, COUNT(*) AS totalVisits FROM user_info WHERE timestamp >= 1479163093000 AND timestamp <= 1479254879639 AND visit = 'Lakehead Hangar'";
-*/
-
 $datePast = $_GET["datePast"];
 $dateCurr = $_GET["dateCurr"];
 
-//$datePast = '1479163093000';
-//$dateCurr = '1479254879639';
 
 $bpmAvg;
 $bpmStatement = "SELECT DISTINCT bpm, AVG(bpm) AS avgBPM FROM user_info WHERE timestamp >= ? AND timestamp <= ? AND bpm != ''";
@@ -75,22 +65,6 @@ if($stmt = $link->prepare($luStatement)){
     $stmt->close();
 }
 
-/*
-if($stmt = $link->prepare($stepsStatement)){
-    $stmt->bind_param("ss", $datePast, $dateCurr);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while($row = $result->fetch_assoc()){
-        $stepsCurr = $row['steps'];
-        $stepsLast = $row['steps'];
-    }
-    $stmt->free_result();
-    $stmt->close();
-}
-*/
-
-
-
 echo json_encode(array(
     'McDonalds' => array(
         'totalVisits' => $mcVisits,
@@ -102,21 +76,7 @@ echo json_encode(array(
     ),
     'Heart Rate' => array(
         'BPMAvg' => $bpmAvg
-    ),/*
-    'Steps' => array(
-        'StepsCurr' => $stepsCurr,
-        'StepsLast' => $stepsLast
-    ),*/
+    ),
 ));
-/*if($mcVisits && $mcAvg){
-    $mcObj = (object)[
-        'Name' => 'McDonalds',
-        'totalVisits' => $mcVisits,
-        'avgDuration' => $mcAvg
-    ];
-    echo json_encode($mcObj);
-}else{
-    echo "False";
-}*/
 
 mysqli_close($link);

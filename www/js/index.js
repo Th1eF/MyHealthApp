@@ -346,9 +346,9 @@ var app = {
             function heartSuccess(bpm){
                 $('#heartRate').text('Heart Rate: ' + bpm);
 
-                uploadData(lastTimeStamp, lastLat, lastLong, lastSpeed, lastStep, bpm, "", "", function(callback){
+                /*uploadData(lastTimeStamp, lastLat, lastLong, lastSpeed, lastStep, bpm, "", "", function(callback){
                    console.log(callback);
-                });
+                });*/
             }
 
             function heartError(){
@@ -364,7 +364,7 @@ var app = {
         });
 
         //Send data to cloud database
-        function uploadData(timestamp, latitude, longitude, speed, steps, bpm, visit, duration, callback){
+        /*function uploadData(timestamp, latitude, longitude, speed, steps, bpm, visit, duration, callback){
             $.ajax({
                 type: 'POST',
                 url: 'http://138.197.130.124/uploadData.php',
@@ -386,7 +386,7 @@ var app = {
                     callback(false);
                 }
             });
-        }
+        }*/
 
         //Get data from cloud database
         function getData(datePast, dateCurr, callback) {
@@ -497,7 +497,7 @@ var app = {
                 return false;
             }
         }
-
+        /*
         window.setInterval(function(){
             var mcTime = checkMcDonalds();
             var lakeheadTime = checkLakehead();
@@ -516,7 +516,7 @@ var app = {
             uploadData(lastTimeStamp, lastLat, lastLong, lastSpeed, lastStep, "", "", "", function(callback){
                 console.log(callback);
             });
-        }, 1000)
+        }, 1000)*/
     },
 
 
