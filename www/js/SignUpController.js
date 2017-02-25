@@ -4,7 +4,7 @@
 var SignIn = SignIn || {};
 
 SignIn.SignUpController = function () {
-    this.$ErrorCtn = null;
+    this.$ctnErr = null;
     this.$FirstName = null;
     this.$LastName = null;
     this.$EmailAddress = null;
@@ -14,7 +14,7 @@ SignIn.SignUpController = function () {
 };
 
 SignIn.SignUpController.prototype.init = function () {
-    this.$ErrorCtn = $("#ctn-err");
+    this.$ctnErr = $("#ctn-err");
     this.$FirstName = $("#txt-first-name");
     this.$LastName = $("#txt-last-name");
     this.$EmailAddress = $("#txt-email-address");
@@ -33,6 +33,60 @@ SignIn.SignUpController.prototype.onSignUp = function () {
         invalidInput = false,
         invisibleStyle = "bi-invisible",
         invalidInputStyle = "bi-invalid-input";
+
+    this.$ctnErr.html("");
+    this.$ctnErr.removeClass().addClass(invisibleStyle);
+    this.$EmailAddress.removeClass(invalidInputStyle);
+    this.$Password.removeClass(invalidInputStyle);
+    this.$PasswordConfirm.removeClass(invalidInputStyle);
+    this.$FirstName.removeClass(invalidInputStyle);
+    this.$LastName.removeClass(invalidInputStyle);
+
+
+    if (emailAddress.length === 0) {
+        this.$EmailAddress.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
+
+    if (password.length === 0) {
+        this.$Password.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
+
+    if (firstName.length === 0) {
+        this.$FirstName.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
+
+    if (lastName.length === 0) {
+        this.$LastName.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
+
+    if (passwordConfirm.length === 0) {
+        this.$PasswordConfirm.addClass(invalidInputStyle);
+        invalidInput = true;
+    }
+
+    if (invalidInput) {
+        this.$ctnErr.html("<p>Please enter all the required fields.</p>");
+        this.$ctnErr.addClass("bi-ctn-err").slideDown();
+        return;
+    }
+
+    if (!this.emailAddressIsValid(emailAddress)) {
+        this.$ctnErr.html("<p>Please enter a valid email address.</p>");
+        this.$ctnErr.addClass("bi-ctn-err").slideDown();
+        this.$EmailAddress.addClass(invalidInputStyle);
+        return;
+    }
+
+    if (!this.passwordsMatch(password,passwordConfirm)) {
+        this.$ctnErr.html("<p>Passwords do not match</p>");
+        this.$ctnErr.addClass("bi-ctn-err").slideDown();
+        this.$Password.addClass(invalidInputStyle);
+        this.$PasswordConfirm.addClass(invalidInputStyle);
+    }
 
     if(this.passwordsMatch(password, passwordConfirm) && this.emailAddressIsValid(emailAddress)){
         console.log("Passwords match and email is valid");
