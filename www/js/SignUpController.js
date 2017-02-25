@@ -36,7 +36,7 @@ SignIn.SignUpController.prototype.onSignUp = function () {
 
     if(this.passwordsMatch(password, passwordConfirm) && this.emailAddressIsValid(emailAddress)){
         console.log("Passwords match and email is valid");
-        console.log("Creating new user in database");
+        console.log("Attempting to create new user in database...");
         $.ajax({
             type: 'POST',
             url: 'http://138.197.130.124/createNewUser.php',
@@ -46,7 +46,8 @@ SignIn.SignUpController.prototype.onSignUp = function () {
                 emailAddress: emailAddress,
                 password: password
             },
-            success: function(){
+            success: function(e){
+                console.log(e);
                 console.log("Created new user successfully");
                 $.mobile.navigate("#sign-in", {transition: "slideup"});
 

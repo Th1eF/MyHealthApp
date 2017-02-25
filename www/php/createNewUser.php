@@ -21,7 +21,7 @@ $password = $_POST["password"];
 $statement = "INSERT INTO user (auth, firstName, lastName, email, password) VALUES (?, ?, ?, ?, ?)";
 if($stmt = $link->prepare($statement)){
     $stmt->bind_param("sssss", $auth, $firstName, $lastName, $emailAddress, $password);
-    $stmt->execute();
+    if(!$stmt->execute()) throw new Exception($stmt->error());
     $stmt->free_result();
     $stmt->close();
 }
