@@ -45,6 +45,4 @@ fabric.properties
 
 #Extras
 .idea/
-platforms/*
-hooks/*
-plugins/*
+/platforms/
