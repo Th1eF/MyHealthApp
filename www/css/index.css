@@ -24,8 +24,8 @@
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color:#E4E4E4;
-    background-image:linear-gradient(top, #ff8c8c 0%, #E4E4E4 51%);
+    background-color:#FFF;
+    /*background-image:linear-gradient(top, #ff8c8c 0%, #E4E4E4 51%);
     background-image:-webkit-linear-gradient(top, #ff8c8c 0%, #E4E4E4 51%);
     background-image:-ms-linear-gradient(top, #ff8c8c 0%, #E4E4E4 51%);
     background-image:-webkit-gradient(
@@ -34,15 +34,16 @@
         left bottom,
         color-stop(0, #ff8c8c),
         color-stop(0.51, #E4E4E4)
-    );
+    );*/
     background-attachment:fixed;
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size:12px;
-    height:100%;
+    height:auto;
     margin:0;
     padding:0;
     /*text-transform:uppercase;*/
     width:100%;
+    overflow: hidden;
 }
 
 /* Portrait layout (default) */
@@ -85,6 +86,10 @@ h1 {
     font-size:12px;
     margin:0 30px;
     padding:2px 0;
+}
+
+body, html{
+    overflow:hidden;
 }
 
 .event.listening {
@@ -227,3 +232,28 @@ h2.mc-text-danger,
 h3.mc-text-danger  {
     color:red;
 }
+
+.ui-btn.ui-btn-b.ui-corner-all {
+    display: inline-block;
+    position: relative;
+    line-height: 32px;
+    border-radius: 2px;
+    background-color: #fb0322;;
+    color: #ffffff;
+}
+
+.toolbar {
+    display: block;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    background-color: #fb0322;
+    padding: 0 16px;
+}
+
+#credits {
+    color: black;
+}
+

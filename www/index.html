@@ -40,7 +40,6 @@
     <script type="text/javascript" src="cordova.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-
     <script src="res/jquery/jquery-1.11.1.min.js"></script>
     <script src="res/jquery/jquery.mobile-1.4.5.min.js"></script>
     <link rel="stylesheet" href="res/jquery/jquery.mobile.structure-1.4.5.min.css">
@@ -61,7 +60,7 @@
 <body>
 
     <div data-role="page" id="page-index" class="background">
-        <div data-role="header" data-theme="c" data-position="fixed">
+        <div data-role="header" class="toolbar" data-position="fixed">
             <h1>My Health App</h1>
         </div>
         <div role="main" class="ui-content">
@@ -75,7 +74,7 @@
     </div>
 
     <div data-role="page" id="sign-up" class="background">
-        <div data-role="header" data-theme="c">
+        <div data-role="header" class="toolbar">
             <h1>USER REGISTRATION</h1>
         </div>
         <div role="main" class="ui-content">
@@ -96,7 +95,7 @@
     </div>
 
     <div class="background" id="sign-in" data-role="page">
-        <div data-role="header" data-theme="c" data-position="fixed">
+        <div data-role="header" class="toolbar" data-position="fixed">
             <a href="#page-index" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
             <h1>LOGIN</h1>
         </div>
@@ -114,12 +113,12 @@
             <p class="mc-top-margin-1-5"><a href="#begin-password-reset">Forgot Password?</a></p>
             <button data-position-to="window" id="submitButton" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</button>
             <p class="mc-top-margin-1-5"><b>No Account?</b></p>
-            <p class="mc-top-margin-1-5"><button id="GoToSignUp">Sign Up</button></p>
+            <button data-position-to="window" id="GoToSignUp" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Sign Up</button>
         </div>
     </div>
 
     <div data-role="page" id="begin-password-reset" class="background">
-        <div data-role="header" data-theme="c">
+        <div data-role="header" class="toolbar">
             <h1>Reset Password</h1>
         </div>
         <div role="main" class="ui-content">
@@ -141,7 +140,7 @@
     </div>
 
     <div data-role="page" id="end-password-reset" class="background">
-        <div data-role="header" data-theme="c">
+        <div data-role="header" class="toolbar">
             <h1>Password Reset</h1>
         </div>
         <div role="main" class="ui-content">
@@ -157,7 +156,8 @@
     </div>
 
     <div class="background" id="mainPage" data-role="page">
-        <div data-role="header" id="mainHeader" data-position="fixed">
+        <div data-role="header" id="mainHeader" data-position="fixed" class="toolbar">
+            <h1>MY HEALTH APP</h1>
             <a href="#statsPage" id="toStats" class="ui-btn" data-transition="slide">MyStats</a>
         </div>
         <div class="app">
@@ -183,8 +183,9 @@
     </div>
 
     <div class="background" id="statsPage" data-role="page">
-        <div data-role="header" id="statsHeader">
+        <div data-role="header" id="statsHeader" class="toolbar">
             <a href="#mainPage" id="toMain" class="ui-btn" data-transition="slide" data-direction="reverse">Back</a>
+            <h2>STATS PAGE</h2>
             <a href="#timePopContent" id="myTime" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all">Time</a>
 
             <div data-role="popup" id="timePopContent" class="ui-content">
