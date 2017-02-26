@@ -18,6 +18,40 @@ var app = {
         app.signUpController = new SignIn.SignUpController();
         app.signInController = new SignIn.SignInController();
 
+        //Check if authToken in localstorage
+        if(typeof(Storage !== "undefined")){
+            var authToken = localStorage.getItem("authToken");
+            var emailAddress = localStorage.getItem("email");
+            //console.log(JSON.stringify(authToken));
+            if(authToken && emailAddress){
+                console.log("An auth token and email exists");
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://138.197.130.124/verifyKeepLogin.php',
+                    data: {
+                        authToken: authToken,
+                        emailAddress: emailAddress
+                    },
+                    success: function(){
+                        console.log("Logged in user successfully");
+                        console.log("navigating to main page...");
+                        $.mobile.navigate("#mainPage", {transition: "slideup"});
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        console.log("Error Code: " + xhr.status);
+                        console.log("Error Response: " + xhr.responseText);
+                        console.log("Thrown Error: " + thrownError);
+                        user.$ctnErr.html("<p>Invalid login credentials.</p>");
+                        user.$ctnErr.addClass("bi-ctn-err").slideDown();
+                        user.$txtEmailAddress.addClass(invalidInputStyle);
+                        user.$txtPassword.addClass(invalidInputStyle);
+                    }
+                });
+            }else{
+                console.log("no auth token");
+            }
+        }
+
         $('#toMain').on('click', function(){
             $("#statsContainer").hide();
             clearGraphs();
@@ -252,6 +286,11 @@ var app = {
 
         $('#GoToSignUp').on('click', function (e) {
            $.mobile.navigate("#sign-up", {transition: "slideup"});
+        });
+
+        $('#signed-in').click(function(){
+            console.log($('#signed-in').is(':checked'));
+            console.log("keep signed in clicked");
         });
 
         //-----------------------------------------------------------------------

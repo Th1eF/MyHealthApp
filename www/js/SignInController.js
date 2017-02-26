@@ -91,6 +91,20 @@ SignIn.SignInController.prototype.onSignIn = function () {
         },
         dataType: 'json',
         success: function(authToken){
+            if(typeof(Storage !== "undefined")){
+                var keepSignedIn = $('#signed-in').is(':checked');
+
+                if(keepSignedIn){
+                    sessionStorage.setItem("keepSignedIn", keepSignedIn);
+                    localStorage.setItem("authToken", authToken);
+                    localStorage.setItem("email", emailAddress);
+
+                }else{
+                    sessionStorage.setItem("authToken", authToken);
+                    sessionStorage.setItem("email", emailAddress);
+                }
+            }
+
             console.log(authToken);
             console.log("Logged in user successfully");
             //Get the auth token
