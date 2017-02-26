@@ -25,7 +25,8 @@ SignIn.SignUpController.prototype.init = function () {
 
 SignIn.SignUpController.prototype.onSignUp = function () {
     console.log("Test signup button");
-    var firstName = this.$FirstName.val().trim(),
+    var user = this,
+        firstName = this.$FirstName.val().trim(),
         lastName = this.$LastName.val().trim(),
         emailAddress = this.$EmailAddress.val().trim(),
         password = this.$Password.val().trim(),
@@ -110,6 +111,9 @@ SignIn.SignUpController.prototype.onSignUp = function () {
                 console.log("Error Code: " + xhr.status);
                 console.log("Error Response: " + xhr.responseText);
                 console.log("Thrown Error: " + thrownError);
+                user.$ctnErr.html("<p>User already exists</p>");
+                user.$ctnErr.addClass("bi-ctn-err").slideDown();
+                user.$EmailAddress.addClass(invalidInputStyle);
             }
         });
 

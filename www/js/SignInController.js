@@ -11,12 +11,10 @@ SignIn.SignInController = function () {
     this.$txtPassword = null;
     this.$keepSignedIn = null;
     this.$ctnErr = null;
-    this.mainMenuPageId = null;
 };
 
 SignIn.SignInController.prototype.init = function () {
     this.$signInPage = $("#sign-in");
-    this.mainMenuPageId = "#mainPage";
     this.$btnSubmit = $("#submitButton", this.$signInPage);
     this.$ctnErr = $("#errCtn", this.$signInPage);
     this.$txtEmailAddress = $("#emailAddress", this.$signInPage);
