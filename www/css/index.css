@@ -1,0 +1,259 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+.background {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color:#fafafa;
+    /*background-image:linear-gradient(top, #ff8c8c 0%, #E4E4E4 51%);
+    background-image:-webkit-linear-gradient(top, #ff8c8c 0%, #E4E4E4 51%);
+    background-image:-ms-linear-gradient(top, #ff8c8c 0%, #E4E4E4 51%);
+    background-image:-webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #ff8c8c),
+        color-stop(0.51, #E4E4E4)
+    );*/
+    background-attachment:fixed;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size:12px;
+    height:auto;
+    margin:0;
+    padding:0;
+    /*text-transform:uppercase;*/
+    width:100%;
+    overflow: hidden;
+
+}
+
+/* Portrait layout (default) */
+.app {
+    background:url(../img/icon.png) no-repeat center top; /* 170px x 200px */
+    position:absolute;             /* position in the center of the screen */
+    left:50%;
+    top:25%;
+    height:50px;                   /* text area height */
+    width:225px;                   /* text area width */
+    text-align:center;
+    padding:180px 0 0 0;     /* image height is 200px (bottom 20px are overlapped with text) */
+    margin:-115px 0 0 -112px;  /* offset vertical: half of image height and text area height */
+                                   /* offset horizontal: half of text area width */
+}
+
+/* Landscape layout (with min-width) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
+    .app {
+        background-position:left center;
+        padding:75px 0 75px 170px;  /* padding-top + padding-bottom + text area = image height */
+        margin:-90px 0 0 -198px;  /* offset vertical: half of image height */
+                                      /* offset horizontal: half of image width and text area width */
+    }
+}
+
+h1 {
+    font-size:24px;
+    font-weight:normal;
+    margin:0;
+    overflow:visible;
+    padding:0;
+    text-align:center;
+}
+
+.event {
+    border-radius:4px;
+    -webkit-border-radius:4px;
+    color:#FFFFFF;
+    font-size:12px;
+    margin:0 30px;
+    padding:2px 0;
+}
+
+body, html{
+    overflow:hidden;
+}
+
+.event.listening {
+    background-color:#333333;
+    display:block;
+}
+
+.event.received {
+    background-color:#4B946A;
+    display:none;
+}
+
+@keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+ 
+@-webkit-keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+ 
+.blink {
+    animation:fade 3000ms infinite;
+    -webkit-animation:fade 3000ms infinite;
+}
+
+#measureBPM{
+    display: block;
+    width:50%;
+    margin:auto;
+    color: white;
+    background-color: #ff8c8c;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size: 1.1em;
+    border: none;
+    border-radius:4px;
+    text-align: center;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+#toStats{
+    display: block;
+    width:20%;
+    margin:auto;
+    color: white;
+    background-color: #679efc;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size: 1.1em;
+    border: none;
+    border-radius:4px;
+    text-align: center;
+    text-decoration: none;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+#toMain{
+    display: block;
+    width:20%;
+    margin:auto;
+    color: white;
+    background-color: #679efc;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size: 1.1em;
+    border: none;
+    border-radius:4px;
+    text-align: center;
+    text-decoration: none;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+#myTime{
+    display: block;
+    width:20%;
+    margin:auto;
+    color: white;
+    background-color: #679efc;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size: 1.1em;
+    border: none;
+    border-radius:4px;
+    text-align: center;
+    text-decoration: none;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+#timePopContent{
+    background-color: #679efc;
+}
+
+.bi-invalid-input {
+    background-color:#fffacd!important;
+}
+
+.bi-invisible {
+    display:none;
+}
+
+.bi-ctn-err {
+    background-color:#ffe1cd;
+    padding:0 .5em;
+    margin-bottom:.5em;
+    border: 1px solid #e9cfbd;
+    border-radius:3px 3px;
+}
+
+
+.bi-header {
+    border: 0; position: fixed; width: 100%; top: 0; left: 0; z-index: 21;
+}
+
+h1,h2,h3,h4,h5 {
+    color:#0071bc;
+}
+
+.ui-btn-icon-notext.ui-corner-all {
+    -webkit-border-radius: .3125em;
+    border-radius: .3125em;
+}
+
+.ui-title {
+    color:#fff;
+}
+
+.mc-text-center {
+    text-align:center;
+}
+
+.mc-top-margin-1-5 {
+    margin-top:1.5em;
+}
+
+h2.mc-text-danger,
+h3.mc-text-danger  {
+    color:red;
+}
+
+.ui-btn.ui-btn-b.ui-corner-all {
+    display: inline-block;
+    position: relative;
+    line-height: 32px;
+    border-radius: 2px;
+    background-color: #fb0322;;
+    color: #ffffff;
+}
+
+.toolbar {
+    display: block;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    background-color: #fb0322;
+    padding: 0 16px;
+}
+
+#credits {
+    color: black;
+}
