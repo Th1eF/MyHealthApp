@@ -45,5 +45,4 @@ fabric.properties
 
 #Extras
 .idea/
-/platforms/*
-/platforms/android/*
+/platforms/
