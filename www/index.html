@@ -50,7 +50,6 @@
     <script src="res/jquery/plugins/jqplot.pointLabels.min.js"></script>
     <link rel="stylesheet" type="text/css" href="res/jquery/jquery.jqplot.min.css"/>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="js/session.js"></script>
     <script type="text/javascript" src="js/SignInController.js"></script>
     <script type="text/javascript" src="js/SignUpController.js"></script>
 
@@ -156,10 +155,21 @@
     </div>
 
     <div class="background" id="mainPage" data-role="page">
+        <!--Panel has to be first here-->
+        <div data-role="panel" data-position="left" data-display="overlay" id="menuPanel">
+            <h4 class="panel_userName"></h4>
+            <a href="#mainPage" class="ui-nodisc-icon ui-btn ui-icon-home ui-btn-icon-left ui-corner-all">Home</a>
+            <a href="#statsPage" class="ui-nodisc-icon ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all">Stats</a>
+            <a href="#goalsPage" class="ui-nodisc-icon ui-btn ui-icon-heart ui-btn-icon-left ui-corner-all">Goals</a>
+            <a href="#settingsPage" class="ui-nodisc-icon ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Settings</a>
+            <a href="#page-index" class="logout ui-nodisc-icon ui-btn ui-icon-back ui-btn-icon-left ui-corner-all">Logout</a>
+        </div>
+
         <div data-role="header" id="mainHeader" data-position="fixed" class="toolbar">
             <h1>MY HEALTH APP</h1>
-            <a href="#statsPage" id="toStats" class="ui-btn" data-transition="slide">MyStats</a>
+            <a href="#menuPanel" class="ui-nodisc-icon ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all"></a>
         </div>
+
         <div class="app">
             <h1>MyHealth</h1>
             <div id="deviceready" class="blink">
