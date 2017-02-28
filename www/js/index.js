@@ -291,6 +291,11 @@ var app = {
             });
         });
 
+        $('#statsPage').on('pagehide', function(){
+            $("#statsContainer").hide();
+            clearGraphs();
+        });
+
         $('#sign-up').on('pageshow', function (e) {
             app.signUpController.init();
             app.signUpController.$Submit.off("tap").on("tap", function () {
@@ -313,6 +318,10 @@ var app = {
         $('#signed-in').click(function(){
             console.log($('#signed-in').is(':checked'));
             console.log("keep signed in clicked");
+        });
+
+        $('#dlg-pwd-reset-sent').click(function(){
+            $.mobile.navigate("#sign-in", {transition: "slideup"});
         });
 
         //-----------------------------------------------------------------------
