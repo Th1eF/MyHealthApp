@@ -44,16 +44,35 @@ var app = {
                         console.log("Error Code: " + xhr.status);
                         console.log("Error Response: " + xhr.responseText);
                         console.log("Thrown Error: " + thrownError);
-                        user.$ctnErr.html("<p>Invalid login credentials.</p>");
-                        user.$ctnErr.addClass("bi-ctn-err").slideDown();
-                        user.$txtEmailAddress.addClass(invalidInputStyle);
-                        user.$txtPassword.addClass(invalidInputStyle);
                     }
                 });
             }else{
                 console.log("no auth token");
             }
+
+            $('.logoutButton').on('click', function(){
+                console.log("Clicked logout button");
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://138.197.130.124/logout.php',
+                    data: {
+                        emailAddress: emailAddress
+                    },
+                    success: function(){
+                        console.log("Logged out user successfully");
+                        $('.panel_userName').text("");
+                        localStorage.clear();
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        console.log("Error Code: " + xhr.status);
+                        console.log("Error Response: " + xhr.responseText);
+                        console.log("Thrown Error: " + thrownError);
+                    }
+                });
+            });
         }
+
+
 
         $('#toMain').on('click', function(){
             $("#statsContainer").hide();

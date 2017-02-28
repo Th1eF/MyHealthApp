@@ -257,3 +257,7 @@ h3.mc-text-danger  {
 #credits {
     color: black;
 }
+
+.panels {
+    background-color:#fafafa;
+}
