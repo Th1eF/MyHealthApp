@@ -32,13 +32,19 @@ if($stmt = $link->prepare($statement)){
             if(!$stmt->execute()) throw new Exception($stmt->error());
             $stmt->free_result();
         }
-        $statement = "SELECT auth FROM user WHERE email = ?";
+        $statement = "SELECT auth, firstName, lastName FROM user WHERE email = ?";
         if($stmt = $link->prepare($statement)){
             $stmt->bind_param("s", $emailAddress);
             if(!$stmt->execute()) throw new Exception($stmt->error());
             $result = $stmt->get_result();
             while($row = $result->fetch_assoc()){
-                echo json_encode($row['auth']);
+                echo json_encode(array(
+                    'user' => array(
+                        'auth' => $row['auth'],
+                        'firstName' => $row['firstName'],
+                        'lastName' => $row['lastName']
+                    )
+                ));
             }
         }
     }else{

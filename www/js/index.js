@@ -26,15 +26,18 @@ var app = {
             if(authToken && emailAddress){
                 console.log("An auth token and email exists");
                 $.ajax({
-                    type: 'POST',
+                    type: 'GET',
                     url: 'http://138.197.130.124/verifyKeepLogin.php',
                     data: {
                         authToken: authToken,
                         emailAddress: emailAddress
                     },
-                    success: function(){
+                    dataType: 'json',
+                    success: function(user){
                         console.log("Logged in user successfully");
                         console.log("navigating to main page...");
+                        console.log(user);
+                        $('.panel_userName').text(user["user"].firstName + " " + user["user"].lastName);
                         $.mobile.navigate("#mainPage", {transition: "slideup"});
                     },
                     error: function(xhr, ajaxOptions, thrownError){
