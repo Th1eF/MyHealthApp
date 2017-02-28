@@ -91,6 +91,7 @@ SignIn.SignInController.prototype.onSignIn = function () {
         },
         dataType: 'json',
         success: function(user){
+            Config.loggedIn = true;
             console.log(user);
             if(typeof(Storage !== "undefined")){
                 var keepSignedIn = $('#signed-in').is(':checked');
@@ -99,9 +100,15 @@ SignIn.SignInController.prototype.onSignIn = function () {
                     sessionStorage.setItem("keepSignedIn", keepSignedIn);
                     localStorage.setItem("authToken", user["user"].auth);
                     localStorage.setItem("email", emailAddress);
+
+                    Config.authToken = localStorage.getItem("authToken");
+                    Config.emailAddress = localStorage.getItem("email");
                 }else{
                     sessionStorage.setItem("authToken", user["user"].auth);
                     sessionStorage.setItem("email", emailAddress);
+
+                    Config.authToken = sessionStorage.getItem("authToken");
+                    Config.emailAddress = sessionStorage.getItem("email");
                 }
             }
 
