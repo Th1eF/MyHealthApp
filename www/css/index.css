@@ -257,3 +257,14 @@ h3.mc-text-danger  {
 #credits {
     color: black;
 }
+
+.panels {
+    background-color:#fafafa;
+}
+
+.center {
+    position:absolute;
+    display:block;
+    left:50%;
+    margin-left:-50px;
+}

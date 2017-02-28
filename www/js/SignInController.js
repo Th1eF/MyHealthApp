@@ -90,25 +90,32 @@ SignIn.SignInController.prototype.onSignIn = function () {
             password: password
         },
         dataType: 'json',
-        success: function(authToken){
+        success: function(user){
+            Config.loggedIn = true;
+            console.log(user);
             if(typeof(Storage !== "undefined")){
                 var keepSignedIn = $('#signed-in').is(':checked');
-
+                $('.panel_userName').text(user["user"].firstName + " " + user["user"].lastName);
                 if(keepSignedIn){
                     sessionStorage.setItem("keepSignedIn", keepSignedIn);
-                    localStorage.setItem("authToken", authToken);
+                    localStorage.setItem("authToken", user["user"].auth);
                     localStorage.setItem("email", emailAddress);
 
+                    Config.authToken = localStorage.getItem("authToken");
+                    Config.emailAddress = localStorage.getItem("email");
                 }else{
-                    sessionStorage.setItem("authToken", authToken);
+                    sessionStorage.setItem("authToken", user["user"].auth);
                     sessionStorage.setItem("email", emailAddress);
+
+                    Config.authToken = sessionStorage.getItem("authToken");
+                    Config.emailAddress = sessionStorage.getItem("email");
                 }
             }
 
-            console.log(authToken);
             console.log("Logged in user successfully");
             //Get the auth token
             $.mobile.navigate("#mainPage", {transition: "slideup"});
+            app.signInController.resetSignIn();
         },
         error: function(xhr, ajaxOptions, thrownError){
             console.log("Error Code: " + xhr.status);
