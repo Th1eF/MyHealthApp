@@ -108,6 +108,7 @@ SignIn.SignInController.prototype.onSignIn = function () {
             console.log("Logged in user successfully");
             //Get the auth token
             $.mobile.navigate("#mainPage", {transition: "slideup"});
+            app.signInController.resetSignIn();
         },
         error: function(xhr, ajaxOptions, thrownError){
             console.log("Error Code: " + xhr.status);

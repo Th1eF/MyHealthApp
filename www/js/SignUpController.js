@@ -105,7 +105,7 @@ SignIn.SignUpController.prototype.onSignUp = function () {
                 console.log(e);
                 console.log("Created new user successfully");
                 $.mobile.navigate("#sign-in", {transition: "slideup"});
-
+                app.signUpController.resetSignUp();
             },
             error: function(xhr, ajaxOptions, thrownError){
                 console.log("Error Code: " + xhr.status);
@@ -121,12 +121,21 @@ SignIn.SignUpController.prototype.onSignUp = function () {
 };
 
 SignIn.SignUpController.prototype.resetSignUp = function () {
-    $ctnErr.removeClass().addClass(invisibleStyle);
-    $txtFirstName.removeClass(invalidInputStyle);
-    $txtLastName.removeClass(invalidInputStyle);
-    $txtEmailAddress.removeClass(invalidInputStyle);
-    $txtPassword.removeClass(invalidInputStyle);
-    $txtPasswordConfirm.removeClass(invalidInputStyle);
+    var invisibleStyle = "bi-invisible",
+        invalidInputStyle = "bi-invalid-input";
+
+    this.$ctnErr.html("");
+    this.$ctnErr.removeClass().addClass(invisibleStyle);
+    this.$EmailAddress.removeClass(invalidInputStyle);
+    this.$EmailAddress.val("");
+    this.$Password.removeClass(invalidInputStyle);
+    this.$Password.val("");
+    this.$PasswordConfirm.removeClass(invalidInputStyle);
+    this.$PasswordConfirm.val("");
+    this.$FirstName.removeClass(invalidInputStyle);
+    this.$FirstName.val("");
+    this.$LastName.removeClass(invalidInputStyle);
+    this.$LastName.val("");
 };
 
 SignIn.SignUpController.prototype.emailAddressIsValid = function (email) {
