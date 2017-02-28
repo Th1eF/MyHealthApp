@@ -90,22 +90,21 @@ SignIn.SignInController.prototype.onSignIn = function () {
             password: password
         },
         dataType: 'json',
-        success: function(authToken){
+        success: function(user){
+            console.log(user);
             if(typeof(Storage !== "undefined")){
                 var keepSignedIn = $('#signed-in').is(':checked');
-
+                $('.panel_userName').text(user["user"].firstName + " " + user["user"].lastName);
                 if(keepSignedIn){
                     sessionStorage.setItem("keepSignedIn", keepSignedIn);
-                    localStorage.setItem("authToken", authToken);
+                    localStorage.setItem("authToken", user["user"].auth);
                     localStorage.setItem("email", emailAddress);
-
                 }else{
-                    sessionStorage.setItem("authToken", authToken);
+                    sessionStorage.setItem("authToken", user["user"].auth);
                     sessionStorage.setItem("email", emailAddress);
                 }
             }
 
-            console.log(authToken);
             console.log("Logged in user successfully");
             //Get the auth token
             $.mobile.navigate("#mainPage", {transition: "slideup"});
