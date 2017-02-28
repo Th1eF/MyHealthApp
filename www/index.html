@@ -156,18 +156,20 @@
 
     <div class="background" id="mainPage" data-role="page">
         <!--Panel has to be first here-->
-        <div data-role="panel" data-position="left" data-display="overlay" id="menuPanel">
+        <div data-role="panel" data-position="left" data-display="overlay" id="menuPanel" class="panels">
             <h4 class="panel_userName"></h4>
-            <a href="#mainPage" class="ui-nodisc-icon ui-btn ui-icon-home ui-btn-icon-left ui-corner-all">Home</a>
-            <a href="#statsPage" class="ui-nodisc-icon ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all">Stats</a>
-            <a href="#goalsPage" class="ui-nodisc-icon ui-btn ui-icon-heart ui-btn-icon-left ui-corner-all">Goals</a>
-            <a href="#settingsPage" class="ui-nodisc-icon ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Settings</a>
-            <a href="#page-index" class="logout ui-nodisc-icon ui-btn ui-icon-back ui-btn-icon-left ui-corner-all">Logout</a>
+            <a href="#mainPage"  class=" ui-btn ui-icon-home ui-btn-icon-left ui-corner-all">Home</a>
+            <a href="#statsPage" class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all">Stats</a>
+            <a href="#goalsPage" class=" ui-btn ui-icon-heart ui-btn-icon-left ui-corner-all">Goals</a>
+            <a href="#locationsPage" class=" ui-btn ui-icon-info ui-btn-icon-left ui-corner-all">Locations</a>
+            <a href="#settingsPage" class=" ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Settings</a>
+            <a href="#page-index" class=" ui-btn ui-icon-back ui-btn-icon-left ui-corner-all">Logout</a>
         </div>
 
         <div data-role="header" id="mainHeader" data-position="fixed" class="toolbar">
             <h1>MY HEALTH APP</h1>
-            <a href="#menuPanel" class="ui-nodisc-icon ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all"></a>
+            <a href="#menuPanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+               class="ui-link ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" data-role="button" role="button">Menu</a>
         </div>
 
         <div class="app">
@@ -192,9 +194,74 @@
         </div>
     </div>
 
+    <div class="background" id="goalsPage" data-role="page">
+        <!--Panel has to be first here-->
+        <div data-role="panel" data-position="left" data-display="overlay" id="goalsPanel" class="panels">
+            <h4 class="panel_userName"></h4>
+            <a href="#mainPage"  class="ui-nodisc-icon ui-btn ui-icon-home ui-btn-icon-left ui-corner-all">Home</a>
+            <a href="#statsPage" class="ui-nodisc-icon ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all">Stats</a>
+            <a href="#goalsPage" class="ui-nodisc-icon ui-btn ui-icon-heart ui-btn-icon-left ui-corner-all">Goals</a>
+            <a href="#locationsPage" class="ui-nodisc-icon ui-btn ui-icon-info ui-btn-icon-left ui-corner-all">Locations</a>
+            <a href="#settingsPage" class="ui-nodisc-icon ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Settings</a>
+            <a href="#page-index" class="logout ui-nodisc-icon ui-btn ui-icon-back ui-btn-icon-left ui-corner-all">Logout</a>
+        </div>
+        <div data-role="header" id="goalsHeader" class="toolbar">
+            <h2>GOALS</h2>
+            <a href="#goalsPanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+               class="ui-link ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" data-role="button" role="button">Menu</a>
+        </div>
+    </div>
+
+    <div class="background" id="locationsPage" data-role="page">
+        <!--Panel has to be first here-->
+        <div data-role="panel" data-position="left" data-display="overlay" id="locationPanel" class="panels">
+            <h4 class="panel_userName"></h4>
+            <a href="#mainPage"  class="ui-nodisc-icon ui-btn ui-icon-home ui-btn-icon-left ui-corner-all">Home</a>
+            <a href="#statsPage" class="ui-nodisc-icon ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all">Stats</a>
+            <a href="#goalsPage" class="ui-nodisc-icon ui-btn ui-icon-heart ui-btn-icon-left ui-corner-all">Goals</a>
+            <a href="#locationsPage" class="ui-nodisc-icon ui-btn ui-icon-info ui-btn-icon-left ui-corner-all">Locations</a>
+            <a href="#settingsPage" class="ui-nodisc-icon ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Settings</a>
+            <a href="#page-index" class="logout ui-nodisc-icon ui-btn ui-icon-back ui-btn-icon-left ui-corner-all">Logout</a>
+        </div>
+        <div data-role="header" id="locationsHeader" class="toolbar">
+            <a href="#locationPanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+               class="ui-link ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" data-role="button" role="button">Menu</a>
+            <h2>LOCATIONS</h2>
+        </div>
+    </div>
+
+    <div class="background" id="settingsPage" data-role="page">
+        <!--Panel has to be first here-->
+        <div data-role="panel" data-position="left" data-display="overlay" id="settingsPanel" class="panels">
+            <h4 class="panel_userName"></h4>
+            <a href="#mainPage"  class="ui-nodisc-icon ui-btn ui-icon-home ui-btn-icon-left ui-corner-all">Home</a>
+            <a href="#statsPage" class="ui-nodisc-icon ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all">Stats</a>
+            <a href="#goalsPage" class="ui-nodisc-icon ui-btn ui-icon-heart ui-btn-icon-left ui-corner-all">Goals</a>
+            <a href="#locationsPage" class="ui-nodisc-icon ui-btn ui-icon-info ui-btn-icon-left ui-corner-all">Locations</a>
+            <a href="#settingsPage" class="ui-nodisc-icon ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Settings</a>
+            <a href="#page-index" class="logout ui-nodisc-icon ui-btn ui-icon-back ui-btn-icon-left ui-corner-all">Logout</a>
+        </div>
+        <div data-role="header" id="settingsHeader" class="toolbar">
+            <a href="#settingsPanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+               class="ui-link ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" data-role="button" role="button">Menu</a>
+            <h2>SETTINGS</h2>
+        </div>
+    </div>
+
     <div class="background" id="statsPage" data-role="page">
+        <!--Panel has to be first here-->
+        <div data-role="panel" data-position="left" data-display="overlay" id="statsPanel" class="panels">
+            <h4 class="panel_userName"></h4>
+            <a href="#mainPage"  class="ui-nodisc-icon ui-btn ui-icon-home ui-btn-icon-left ui-corner-all">Home</a>
+            <a href="#statsPage" class="ui-nodisc-icon ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all">Stats</a>
+            <a href="#goalsPage" class="ui-nodisc-icon ui-btn ui-icon-heart ui-btn-icon-left ui-corner-all">Goals</a>
+            <a href="#locationsPage" class="ui-nodisc-icon ui-btn ui-icon-info ui-btn-icon-left ui-corner-all">Locations</a>
+            <a href="#settingsPage" class="ui-nodisc-icon ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Settings</a>
+            <a href="#page-index" class="logout ui-nodisc-icon ui-btn ui-icon-back ui-btn-icon-left ui-corner-all">Logout</a>
+        </div>
         <div data-role="header" id="statsHeader" class="toolbar">
-            <a href="#mainPage" id="toMain" class="ui-btn" data-transition="slide" data-direction="reverse">Back</a>
+            <a href="#statsPanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+               class="ui-link ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" data-role="button" role="button">Menu</a>
             <h2>STATS PAGE</h2>
             <a href="#timePopContent" id="myTime" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all">Time</a>
 
