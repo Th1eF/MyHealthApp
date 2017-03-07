@@ -113,7 +113,7 @@ var sensorData = (function(){
     };
 
     var upload = function(timestamp, latitude, longitude, speed, steps, bpm, visit, duration){
-        if(Config.loggedIn){
+        if(Config.loggedIn && Config.uploadData){
             $.ajax({
                 type: 'POST',
                 url: 'http://138.197.130.124/uploadData.php',
@@ -138,7 +138,7 @@ var sensorData = (function(){
                 }
             });
         }else{
-            console.log("Not logged in, not uploading");
+            console.log("Not uploading Data [loggedIn] = " + Config.loggedIn + " , [uploadData] = " + Config.uploadData);
         }
     };
 
