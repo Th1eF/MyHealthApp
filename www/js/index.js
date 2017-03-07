@@ -17,6 +17,7 @@ var app = {
         app.receivedEvent('deviceready');
         app.signUpController = new SignIn.SignUpController();
         app.signInController = new SignIn.SignInController();
+        app.ChangePassword = new SignIn.ChangePassword();
 
         sensorData.init();
 
@@ -85,40 +86,19 @@ var app = {
                     case "page-signin":
                         app.signInController.resetSignIn();
                         break;
+
+                    case "page-settingspage":
+                        app.ChangePassword.resetSettings();
+                        break;
                 }
             }
         });
 
-        //TODO fix this up possibly with a controller and add a splash/toast confirmation
-        $('#submitNewPass').on('click', function(){
-            var oldPassword = $('#old-password').val().trim();
-            var newPassword = $('#new-password').val().trim();
-            var newPasswordConfirm = $('#new-password-confirm').val().trim();
-            if(newPassword === newPasswordConfirm){
-                console.log(oldPassword);
-                console.log(newPassword);
-                console.log(newPasswordConfirm);
-                $.ajax({
-                    type: 'POST',
-                    url: 'http://138.197.130.124/setNewPassword.php',
-                    data: {
-                        oldPassword: oldPassword,
-                        newPassword: newPassword,
-                        auth: Config.authToken
-                    },
-                    success: function(){
-                        console.log("New password set successfully")
-                        $('#old-password').val("");
-                        $('#new-password').val("");
-                        $('#new-password-confirm').val("")
-                    },
-                    error: function(xhr, ajaxOptions, thrownError){
-                        console.log("Error Code: " + xhr.status);
-                        console.log("Error Response: " + xhr.responseText);
-                        console.log("Thrown Error: " + thrownError);
-                    }
-                });
-            }
+        $('#settingsPage').on('pageshow', function (e) {
+            app.ChangePassword.init();
+            app.ChangePassword.$confirmBtn.off("tap").on("tap", function () {
+                app.ChangePassword.onPassChange();
+            });
         });
 
         //TODO finish UI for resetting the password. Password needs to be one use and reset upon logging in for the first time
