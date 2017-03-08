@@ -79,15 +79,15 @@ var app = {
         $(document).on("pagecontainerbeforeshow", function (event, ui) {
             if (typeof ui.toPage == "object") {
                 switch (ui.toPage.attr("id")) {
-                    case "page-signup":
+                    case "sign-up":
                         app.signUpController.resetSignUp();
                         break;
 
-                    case "page-signin":
+                    case "sign-in":
                         app.signInController.resetSignIn();
                         break;
 
-                    case "page-settingspage":
+                    case "settingsPage":
                         app.ChangePassword.resetSettings();
                         break;
                 }

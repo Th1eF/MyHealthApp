@@ -52,6 +52,7 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/SignInController.js"></script>
     <script type="text/javascript" src="js/SignUpController.js"></script>
+    <script type="text/javascript" src="js/ChangePassword.js"></script>
     <script type="text/javascript" src="js/sensorData.js"></script>
     <script type="text/javascript" src="js/generateGraphs.js"></script>
     <script type="text/javascript" src="js/Config.js"></script>
@@ -127,6 +128,8 @@
             <h3>Password Reset</h3>
             <label for="txt-email">Enter your email address</label>
             <input type="text" name="txt-email" id="txt-email" value="">
+            <label for="token">Enter the token you recieved by email</label>
+            <input type="text" name="token" id="token" value="">
             <button data-position-to="window" id="resetsubmit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</button>
             <div data-role="popup" id="dlg-pwd-reset-sent" data-dismissible="false" style="max-width:400px;">
                 <div data-role="header">
