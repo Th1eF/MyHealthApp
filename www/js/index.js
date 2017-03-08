@@ -104,22 +104,46 @@ var app = {
         //TODO finish UI for resetting the password. Password needs to be one use and reset upon logging in for the first time
         $('#resetsubmit').on('click', function(){
             var emailAddress = $('#txt-email').val().trim();
-            $.ajax({
-                type: 'POST',
-                url: 'http://138.197.130.124/resetPassword.php',
-                data: {
-                    emailAddress: emailAddress
-                },
-                success: function(){
-                    console.log("Sent code to reset password")
-                    $('#txt-email').val("");
-                },
-                error: function(xhr, ajaxOptions, thrownError){
-                    console.log("Error Code: " + xhr.status);
-                    console.log("Error Response: " + xhr.responseText);
-                    console.log("Thrown Error: " + thrownError);
-                }
-            });
+            var token = $('#token').val().trim();
+            if(token){
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://138.197.130.124/resetPasswordVerifyCode.php',
+                    data: {
+                        emailAddress: emailAddress,
+                        token: token
+                    },
+                    success: function(){
+                        console.log("Sent code to reset password");
+                        $('#txt-email').val("");
+                        $('#token').val("");
+                        //TODO TRANSITION TO OTHER PAGE TO SET A NEW PASSWORD
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        console.log("Error Code: " + xhr.status);
+                        console.log("Error Response: " + xhr.responseText);
+                        console.log("Thrown Error: " + thrownError);
+                    }
+                });
+            }
+            else{
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://138.197.130.124/resetPassword.php',
+                    data: {
+                        emailAddress: emailAddress
+                    },
+                    success: function(){
+                        console.log("Sent code to reset password")
+                        $('#txt-email').val("");
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        console.log("Error Code: " + xhr.status);
+                        console.log("Error Response: " + xhr.responseText);
+                        console.log("Thrown Error: " + thrownError);
+                    }
+                });
+            }
         });
 
         $('#sign-in').on('pageshow', function (e) {
