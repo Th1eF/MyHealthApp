@@ -21,7 +21,7 @@ SignIn.ChangePassword.prototype.init = function() {
   this.$errmsg = $('#err-msg');
 };
 
-SignIn.ChangePassword().prototype.resetSettings = function(){
+SignIn.ChangePassword.prototype.resetSettings = function(){
     var invisibleStyle = "bi-invisible",
         invalidInputStyle = "bi-invalid-input";
 

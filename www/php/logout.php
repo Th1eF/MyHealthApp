@@ -23,3 +23,5 @@ if($stmt = $link->prepare($statement)){
 }
 
 mysqli_close($link);
+
+?>

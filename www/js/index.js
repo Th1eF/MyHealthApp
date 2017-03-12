@@ -76,7 +76,8 @@ var app = {
             });
         }
 
-        $(document).on("pagecontainerbeforeshow", function (event, ui) {
+        //TODO FIX OR REMOVE THIS, BREAKS ON APP LAUNCH SINCE IT CANNOT FIND HTML DOM ELEMENTS
+        /*$(document).on("pagecontainerbeforeshow", function (event, ui) {
             if (typeof ui.toPage == "object") {
                 switch (ui.toPage.attr("id")) {
                     case "sign-up":
@@ -92,7 +93,7 @@ var app = {
                         break;
                 }
             }
-        });
+        });*/
 
         $('#settingsPage').on('pageshow', function (e) {
             app.ChangePassword.init();
@@ -101,8 +102,8 @@ var app = {
             });
         });
 
-        //TODO finish UI for resetting the password. Password needs to be one use and reset upon logging in for the first time
-        $('#resetsubmit').on('click', function(){
+        //TODO ADD SOME FEEDBACK TO USER WHEN SUCCESS/ERROR
+        $('#beginResetPasswordButton').on('click', function(){
             var emailAddress = $('#txt-email').val().trim();
             var token = $('#token').val().trim();
             if(token){
@@ -114,10 +115,9 @@ var app = {
                         token: token
                     },
                     success: function(){
-                        console.log("Sent code to reset password");
-                        $('#txt-email').val("");
-                        $('#token').val("");
-                        //TODO TRANSITION TO OTHER PAGE TO SET A NEW PASSWORD
+                        console.log("Token is valid, going to reset password page");
+                        $.mobile.navigate("#end-password-reset", {transition: "slide"});
+
                     },
                     error: function(xhr, ajaxOptions, thrownError){
                         console.log("Error Code: " + xhr.status);
@@ -129,13 +129,46 @@ var app = {
             else{
                 $.ajax({
                     type: 'POST',
-                    url: 'http://138.197.130.124/resetPassword.php',
+                    url: 'http://138.197.130.124/resetPasswordSendToken.php',
                     data: {
                         emailAddress: emailAddress
                     },
                     success: function(){
                         console.log("Sent code to reset password")
+                        //TODO MAKE TOKEN AND LABEL VISIBLE ONLY AFTER CODE IS SENT
+                        //$('#token').style.visibility = "visible";
+                        //$('#tokenLabel').style.visibility = "visible";
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        console.log("Error Code: " + xhr.status);
+                        console.log("Error Response: " + xhr.responseText);
+                        console.log("Thrown Error: " + thrownError);
+                    }
+                });
+            }
+        });
+
+        //TODO ADD SOME FEEDBACK TO USER WHEN SUCCESS/ERROR
+        //TODO FIX PASSWORD FIELDS ACCEPTING SIMPLE PASSWORDS
+        $('#endResetPasswordButton').on('click', function(){
+            var emailAddress = $('#txt-email').val().trim();
+            var newPassword = $('#txt-new-password').val().trim();
+            var newPasswordConfirm = $('#txt-new-password-confirm').val().trim();
+            if(newPassword === newPasswordConfirm && newPassword.length > 0 && newPasswordConfirm.length > 0){
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://138.197.130.124/resetPasswordNewPassword.php',
+                    data: {
+                        emailAddress: emailAddress,
+                        newPassword: newPassword
+                    },
+                    success: function(){
+                        console.log("Reset Password successfully");
                         $('#txt-email').val("");
+                        $('#token').val("");
+                        $('#txt-new-password').val("");
+                        $('#txt-new-password-confirm').val("");
+                        $.mobile.navigate("#sign-in", {transition: "slide"});
                     },
                     error: function(xhr, ajaxOptions, thrownError){
                         console.log("Error Code: " + xhr.status);
