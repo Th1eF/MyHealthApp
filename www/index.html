@@ -126,6 +126,7 @@
         </div>
         <div role="main" class="ui-content">
             <h3>Password Reset</h3>
+            <div id="beginResetErr" class="bi-invisible"></div>
             <label for="txt-email">Enter your email address</label>
             <input type="text" name="txt-email" id="txt-email" value="">
             <!--TODO: MAKE TOKEN AND LABEL INVISIBLE AT START -->
@@ -151,6 +152,7 @@
         </div>
         <div role="main" class="ui-content">
             <h3>Reset Password</h3>
+            <div id="endResetErr" class="bi-invisible"></div>
             <label for="txt-new-password">New Password</label>
             <input type="password" name="txt-new-password" id="txt-new-password" value="">
             <label for="txt-new-password-confirm">Confirm New Password</label>

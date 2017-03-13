@@ -76,24 +76,23 @@ var app = {
             });
         }
 
-        //TODO FIX OR REMOVE THIS, BREAKS ON APP LAUNCH SINCE IT CANNOT FIND HTML DOM ELEMENTS
-        /*$(document).on("pagecontainerbeforeshow", function (event, ui) {
+        $(document).on("pagecontainerbeforeshow", function (event, ui) {
             if (typeof ui.toPage == "object") {
                 switch (ui.toPage.attr("id")) {
-                    case "sign-up":
+                    case "page-signup":
                         app.signUpController.resetSignUp();
                         break;
 
-                    case "sign-in":
+                    case "page-signin":
                         app.signInController.resetSignIn();
                         break;
 
-                    case "settingsPage":
+                    case "page-settingsPage":
                         app.ChangePassword.resetSettings();
                         break;
                 }
             }
-        });*/
+        });
 
         $('#settingsPage').on('pageshow', function (e) {
             app.ChangePassword.init();
@@ -102,10 +101,14 @@ var app = {
             });
         });
 
-        //TODO ADD SOME FEEDBACK TO USER WHEN SUCCESS/ERROR
         $('#beginResetPasswordButton').on('click', function(){
+            var invisibleStyle = "bi-invisible";
+            var invalidInputStyle = "bi-invalid-input";
             var emailAddress = $('#txt-email').val().trim();
             var token = $('#token').val().trim();
+            var errMsg = $('#beginResetErr');
+            errMsg.html("");
+            errMsg.removeClass().addClass(invisibleStyle);
             if(token){
                 $.ajax({
                     type: 'POST',
@@ -123,6 +126,10 @@ var app = {
                         console.log("Error Code: " + xhr.status);
                         console.log("Error Response: " + xhr.responseText);
                         console.log("Thrown Error: " + thrownError);
+                        errMsg.html("<p>Invalid login credentials.</p>");
+                        errMsg.addClass("bi-ctn-err").slideDown();
+                        $('#txt-email').addClass(invalidInputStyle);
+                        $('#token').addClass(invalidInputStyle);
                     }
                 });
             }
@@ -134,7 +141,7 @@ var app = {
                         emailAddress: emailAddress
                     },
                     success: function(){
-                        console.log("Sent code to reset password")
+                        console.log("Sent code to reset password");
                         //TODO MAKE TOKEN AND LABEL VISIBLE ONLY AFTER CODE IS SENT
                         //$('#token').style.visibility = "visible";
                         //$('#tokenLabel').style.visibility = "visible";
@@ -143,17 +150,25 @@ var app = {
                         console.log("Error Code: " + xhr.status);
                         console.log("Error Response: " + xhr.responseText);
                         console.log("Thrown Error: " + thrownError);
+                        errMsg.html("<p>Invalid login credentials.</p>");
+                        errMsg.addClass("bi-ctn-err").slideDown();
+                        $('#txt-email').addClass(invalidInputStyle);
+                        $('#token').addClass(invalidInputStyle);
                     }
                 });
             }
         });
 
-        //TODO ADD SOME FEEDBACK TO USER WHEN SUCCESS/ERROR
         //TODO FIX PASSWORD FIELDS ACCEPTING SIMPLE PASSWORDS
         $('#endResetPasswordButton').on('click', function(){
+            var invisibleStyle = "bi-invisible";
+            var invalidInputStyle = "bi-invalid-input";
             var emailAddress = $('#txt-email').val().trim();
             var newPassword = $('#txt-new-password').val().trim();
             var newPasswordConfirm = $('#txt-new-password-confirm').val().trim();
+            var errMsg = $('#endResetErr');
+            errMsg.html("");
+            errMsg.removeClass().addClass(invisibleStyle);
             if(newPassword === newPasswordConfirm && newPassword.length > 0 && newPasswordConfirm.length > 0){
                 $.ajax({
                     type: 'POST',
@@ -174,6 +189,11 @@ var app = {
                         console.log("Error Code: " + xhr.status);
                         console.log("Error Response: " + xhr.responseText);
                         console.log("Thrown Error: " + thrownError);
+                        errMsg.html("<p>Invalid login credentials.</p>");
+                        errMsg.addClass("bi-ctn-err").slideDown();
+                        $('#txt-email').addClass(invalidInputStyle);
+                        $('#txt-new-password').addClass(invalidInputStyle);
+                        $('#txt-new-password-confirm').addClass(invalidInputStyle);
                     }
                 });
             }
