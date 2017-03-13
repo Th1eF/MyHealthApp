@@ -19,6 +19,9 @@ var app = {
         app.signInController = new SignIn.SignInController();
         app.ChangePassword = new SignIn.ChangePassword();
 
+        var invisibleStyle = "bi-invisible";
+        var invalidInputStyle = "bi-invalid-input";
+
         sensorData.init();
 
         //Check if authToken in localstorage
@@ -76,24 +79,6 @@ var app = {
             });
         }
 
-        $(document).on("pagecontainerbeforeshow", function (event, ui) {
-            if (typeof ui.toPage == "object") {
-                switch (ui.toPage.attr("id")) {
-                    case "page-signup":
-                        app.signUpController.resetSignUp();
-                        break;
-
-                    case "page-signin":
-                        app.signInController.resetSignIn();
-                        break;
-
-                    case "page-settingsPage":
-                        app.ChangePassword.resetSettings();
-                        break;
-                }
-            }
-        });
-
         $('#settingsPage').on('pageshow', function (e) {
             app.ChangePassword.init();
             app.ChangePassword.$confirmBtn.off("tap").on("tap", function () {
@@ -102,8 +87,6 @@ var app = {
         });
 
         $('#beginResetPasswordButton').on('click', function(){
-            var invisibleStyle = "bi-invisible";
-            var invalidInputStyle = "bi-invalid-input";
             var emailAddress = $('#txt-email').val().trim();
             var token = $('#token').val().trim();
             var errMsg = $('#beginResetErr');
@@ -161,8 +144,6 @@ var app = {
 
         //TODO FIX PASSWORD FIELDS ACCEPTING SIMPLE PASSWORDS
         $('#endResetPasswordButton').on('click', function(){
-            var invisibleStyle = "bi-invisible";
-            var invalidInputStyle = "bi-invalid-input";
             var emailAddress = $('#txt-email').val().trim();
             var newPassword = $('#txt-new-password').val().trim();
             var newPasswordConfirm = $('#txt-new-password-confirm').val().trim();
@@ -201,6 +182,7 @@ var app = {
 
         $('#sign-in').on('pageshow', function (e) {
             app.signInController.init();
+            app.signInController.resetSignIn();
             app.signInController.$btnSubmit.off("tap").on("tap", function () {
                 app.signInController.onSignIn();
             });
@@ -208,9 +190,22 @@ var app = {
 
         $('#sign-up').on('pageshow', function (e) {
             app.signUpController.init();
+            app.signUpController.resetSignUp();
             app.signUpController.$Submit.off("tap").on("tap", function () {
                 app.signUpController.onSignUp();
             });
+        });
+
+        $('#settingsPage').on('pageshow', function (e) {
+            app.ChangePassword.resetSettings();
+        });
+
+        $('#begin-password-reset').on('pageshow', function (e) {
+            resetBeginReset();
+        });
+
+        $('#end-password-reset').on('pageshow', function (e) {
+            resetEndReset();
         });
 
         $('#ToSignIn').on('click', function (e) {
@@ -233,6 +228,27 @@ var app = {
         $('#dlg-pwd-reset-sent').click(function(){
             $.mobile.navigate("#sign-in", {transition: "slideup"});
         });
+
+        function resetBeginReset() {
+            $('#beginResetErr').html("");
+            $('#beginResetErr').removeClass().addClass(invisibleStyle);
+            $('#txt-email').removeClass(invalidInputStyle);
+            $('#token').removeClass(invalidInputStyle);
+            $('#txt-email').val("");
+            $('#token').val("");
+        }
+
+        function resetEndReset() {
+            $('#endResetErr').html("");
+            $('#endResetErr').removeClass().addClass(invisibleStyle);
+            $('#txt-email').removeClass(invalidInputStyle);
+            $('#txt-new-password').removeClass(invalidInputStyle);
+            $('#txt-new-password-confirm').removeClass(invalidInputStyle);
+            $('#txt-email').val("");
+            $('#txt-new-password').val("");
+            $('#txt-new-password-confirm').val("");
+
+        }
 
         //Haversine formula
         function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
