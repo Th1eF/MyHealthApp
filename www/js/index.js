@@ -23,6 +23,7 @@ var app = {
         var invalidInputStyle = "bi-invalid-input";
 
         sensorData.init();
+        generateGraphs.init();
 
         //Check if authToken in localstorage
         if(typeof(Storage !== "undefined")){

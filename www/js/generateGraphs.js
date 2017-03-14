@@ -1,20 +1,20 @@
 var generateGraphs = (function(){
-    $('#toMain').on('click', function(){
-        $("#statsContainer").hide();
-        clearGraphs();
-    });
+    var init = function(){
+        $('#toMain').on('click', function(){
+            $("#statsContainer").hide();
+            clearGraphs();
+        });
 
-    $('#statsPage').on('pagehide', function(){
-        $("#statsContainer").hide();
-        clearGraphs();
-    });
+        $('#statsPage').on('pagehide', function(){
+            $("#statsContainer").hide();
+            clearGraphs();
+        });
 
-    function clearGraphs(){
-        $('#visitStats').empty();
-        $('#healthStats').empty();
-    }
+        function clearGraphs(){
+            $('#visitStats').empty();
+            $('#healthStats').empty();
+        }
 
-    $('#statsPage').on('pageshow', function(e){
         console.log('page shown');
         $("#statsContainer").show();
 
@@ -90,38 +90,17 @@ var generateGraphs = (function(){
             });
         });
 
+
+        //TODO FINISH GENERATING GRAPH HOUR BY HOUR BREAK DOWN
         $("#radio-choice-v-6c").click(function(){
             console.log("1 day");
             $("#timePopContent").popup('close');
             var dayTime = 86400000;
-            var currTime = lastTimeStamp;
+            var currTime = new Date().getTime();
+            console.log(currTime);
             var pastTime = currTime - dayTime;
-            //datePast, dateCurr
-            getData(pastTime, currTime, function(callback){
+            getDataDay(pastTime, currTime, function(callback){
                 console.log(callback);
-                var avgBPM = callback["Heart Rate"].BPMAvg;
-                var gymVisit = callback["Lakehead Hangar"].totalVisits;
-                var gymDur = callback["Lakehead Hangar"].avgDuration;
-                var mcVisit = callback["McDonalds"].totalVisits;
-                var mcDur = callback["McDonalds"].avgDuration;
-                console.log(avgBPM + " " + gymVisit + " " +  gymDur + " " +  mcVisit + " " +  mcDur);
-                if((mcVisit == 0 || mcVisit == null || mcDur == 0 || mcDur == null) && (gymVisit == 0 || gymVisit == null || gymDur == 0 || gymDur == null)) {
-                    var visitStats = [['No Statistics Found', 0]];
-                    var healthStats = [['Steps', lastStep], ['Avg BPM', avgBPM]];
-                    createGraphs(visitStats, healthStats);
-                }else if(gymVisit == 0 || gymVisit == null || gymDur == 0 || gymDur == null){
-                    var visitStats = [['McDonalds', mcVisit], ['McD Avg(s)', mcDur]];
-                    var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                    createGraphs(visitStats, healthStats);
-                }else if(mcVisit == 0 || mcVisit == null || mcDur == 0 || mcDur == null){
-                    var visitStats = [['Lakehead Hangar', gymVisit], ['Gym Avg(s)', gymDur]];
-                    var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                    createGraphs(visitStats, healthStats);
-                }else{
-                    var visitStats = [['Lakehead Hangar', gymVisit], ['Gym Avg(s)', gymDur], ['McDonalds', mcVisit], ['McD Avg(s)', mcDur]];
-                    var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                    createGraphs(visitStats, healthStats);
-                }
             });
         });
 
@@ -198,14 +177,14 @@ var generateGraphs = (function(){
             });
         }
 
-        //Get data from cloud database
-        function getData(datePast, dateCurr, callback) {
+        function getDataDay(datePast, dateCurr, callback){
             $.ajax({
                 type: 'GET',
-                url: 'http://138.197.130.124/getData.php',
+                url: 'http://138.197.130.124/getDataDay.php',
                 data: {
                     datePast: datePast,
-                    dateCurr: dateCurr
+                    dateCurr: dateCurr,
+                    auth: Config.authToken
                 },
                 dataType: 'json',
                 success: callback,
@@ -217,7 +196,30 @@ var generateGraphs = (function(){
                 }
             });
         }
-    });
-});
+
+        //Get data from cloud database
+        /*function getData(datePast, dateCurr, callback) {
+         $.ajax({
+         type: 'GET',
+         url: 'http://138.197.130.124/getData.php',
+         data: {
+         datePast: datePast,
+         dateCurr: dateCurr
+         },
+         dataType: 'json',
+         success: callback,
+         error: function(xhr, ajaxOptions, thrownError){
+         console.log("Error Code: " + xhr.status);
+         console.log("Error Response: " + xhr.responseText);
+         console.log("Thrown Error: " + thrownError);
+         callback(false);
+         }
+         });
+         }*/
+    };
+
+    return{init: init}
+
+})();
 
 
