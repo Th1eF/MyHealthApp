@@ -91,6 +91,9 @@ h1 {
 
 body, html{
     overflow:hidden;
+    line-height: 1.42857143;
+    color: black;
+
 }
 
 .event.listening {

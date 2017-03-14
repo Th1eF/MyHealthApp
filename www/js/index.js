@@ -248,7 +248,6 @@ var app = {
             $('#txt-email').val("");
             $('#txt-new-password').val("");
             $('#txt-new-password-confirm').val("");
-
         }
 
         //Haversine formula
@@ -340,7 +339,6 @@ var app = {
             }
         }
     },
-
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
