@@ -1,13 +1,13 @@
 var generateGraphs = (function(){
     var init = function(){
-        $('#toMain').on('click', function(){
+        $('#statsPage').on('pagebeforehide', function(){
             $("#statsContainer").hide();
             clearGraphs();
         });
 
-        $('#statsPage').on('pagehide', function(){
-            $("#statsContainer").hide();
-            clearGraphs();
+        $('#statsPage').on('pagebeforeshow', function(){
+            console.log('page shown');
+            $("#statsContainer").show();
         });
 
         function clearGraphs(){
@@ -15,9 +15,6 @@ var generateGraphs = (function(){
             $('#visitStats').empty();
             $('#healthStats').empty();
         }
-
-        console.log('page shown');
-        $("#statsContainer").show();
 
         $("#radio-choice-v-6a").click(function(){
             console.log("one week checked");
