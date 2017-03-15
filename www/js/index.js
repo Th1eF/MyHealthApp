@@ -143,7 +143,6 @@ var app = {
             }
         });
 
-        //TODO FIX PASSWORD FIELDS ACCEPTING SIMPLE PASSWORDS
         $('#endResetPasswordButton').on('click', function(){
             var emailAddress = $('#txt-email').val().trim();
             var newPassword = $('#txt-new-password').val().trim();
@@ -151,7 +150,20 @@ var app = {
             var errMsg = $('#endResetErr');
             errMsg.html("");
             errMsg.removeClass().addClass(invisibleStyle);
-            if(newPassword === newPasswordConfirm && newPassword.length > 0 && newPasswordConfirm.length > 0){
+            if(newPassword.length ===0) {
+                $('#txt-new-password').addClass(invalidInputStyle);
+                errMsg.html("<p>Password must be entered.</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else if(newPasswordConfirm === 0) {
+                $('#txt-new-password-confirm').addClass(invalidInputStyle);
+                errMsg.html("<p>Must confirm new password.</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else if(newPassword === newPasswordConfirm) {
+                $('#txt-new-password').addClass(invalidInputStyle);
+                $('#txt-new-password-confirm').addClass(invalidInputStyle);
+                errMsg.html("<p>Passwords entered must match</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else{
                 $.ajax({
                     type: 'POST',
                     url: 'http://138.197.130.124/resetPasswordNewPassword.php',
