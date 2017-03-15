@@ -11,6 +11,7 @@ var generateGraphs = (function(){
         });
 
         function clearGraphs(){
+            $('#stepsStats').empty();
             $('#visitStats').empty();
             $('#healthStats').empty();
         }
@@ -101,6 +102,13 @@ var generateGraphs = (function(){
             var pastTime = currTime - dayTime;
             getDataDay(pastTime, currTime, function(callback){
                 console.log(callback);
+                var stepsStats = [];
+                $.each(callback, function(key, value){
+                   stepsStats.push([key, value]);
+                });
+                console.log(stepsStats);
+
+                createDayGraphs(stepsStats);
             });
         });
 
@@ -138,6 +146,35 @@ var generateGraphs = (function(){
                 }
             });
         });
+
+
+        function createDayGraphs(stepsStats){
+            clearGraphs();
+
+            $('#stepsStats').jqplot([stepsStats], {
+                animate: !$.jqplot.use_excanvas,
+                title:'Steps Stats',
+                seriesDefaults:{
+                    renderer:$.jqplot.BarRenderer,
+                    pointLabels: {show: true},
+                    rendererOptions:{
+                        varyBarColor: true
+                    }
+                },
+                axesDefaults: {
+                    tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+                    tickOptions: {
+                        angle: -30,
+                        fontSize: '10pt'
+                    }
+                },
+                axes:{
+                    xaxis:{
+                        renderer: $.jqplot.CategoryAxisRenderer
+                    }
+                }
+            });
+        }
 
         function createGraphs(visitStats, healthStats){
             clearGraphs();

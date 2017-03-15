@@ -107,6 +107,8 @@ if($stmt = $link->prepare($statement)){
     }
     $stmt->free_result();
     for($i = 0; $i < 24; $i++){
+        $stepsLast = 0;
+        $stepsFirst = 0;
         $getStepsFirst = "SELECT steps FROM `".$ID."` WHERE timestamp BETWEEN ? AND ? ORDER BY timestamp ASC LIMIT 1";
         if($stmt = $link->prepare($getStepsFirst)){
             $stmt->bind_param("ss", $startTime, $endTime);
@@ -132,7 +134,6 @@ if($stmt = $link->prepare($statement)){
         $startTime += $oneHour;
         $endTime += $oneHour;
     }
-
     echo json_encode(array_combine($timeArray, $stepsArray));
 
     $stmt->close();
