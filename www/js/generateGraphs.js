@@ -151,6 +151,7 @@ var generateGraphs = (function(){
         function createDayGraphs(stepsStats){
             clearGraphs();
 
+            //TODO LOOK INTO WHY X AND Y AXIS APPEAR BLURRY
             $('#stepsStats').jqplot([stepsStats], {
                 animate: !$.jqplot.use_excanvas,
                 title:'Steps Stats',
@@ -164,8 +165,8 @@ var generateGraphs = (function(){
                 axesDefaults: {
                     tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
                     tickOptions: {
-                        angle: -30,
-                        fontSize: '10pt'
+                        angle: -90,
+                        fontSize: '8pt'
                     }
                 },
                 axes:{
