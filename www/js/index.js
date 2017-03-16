@@ -91,6 +91,7 @@ var app = {
             var emailAddress = $('#txt-email').val().trim();
             var token = $('#token').val().trim();
             var errMsg = $('#beginResetErr');
+            sessionStorage.setItem("emailReset", emailAddress);
             errMsg.html("");
             errMsg.removeClass().addClass(invisibleStyle);
             if(token){
@@ -144,21 +145,20 @@ var app = {
         });
 
         $('#endResetPasswordButton').on('click', function(){
-            var emailAddress = $('#txt-email').val().trim();
             var newPassword = $('#txt-new-password').val().trim();
             var newPasswordConfirm = $('#txt-new-password-confirm').val().trim();
             var errMsg = $('#endResetErr');
             errMsg.html("");
             errMsg.removeClass().addClass(invisibleStyle);
-            if(newPassword.length ===0) {
+            if(newPassword.length == 0) {
                 $('#txt-new-password').addClass(invalidInputStyle);
                 errMsg.html("<p>Password must be entered.</p>");
                 errMsg.addClass("bi-ctn-err").slideDown();
-            }else if(newPasswordConfirm === 0) {
+            }else if(newPasswordConfirm.length == 0) {
                 $('#txt-new-password-confirm').addClass(invalidInputStyle);
                 errMsg.html("<p>Must confirm new password.</p>");
                 errMsg.addClass("bi-ctn-err").slideDown();
-            }else if(newPassword === newPasswordConfirm) {
+            }else if(!newPassword === newPasswordConfirm) {
                 $('#txt-new-password').addClass(invalidInputStyle);
                 $('#txt-new-password-confirm').addClass(invalidInputStyle);
                 errMsg.html("<p>Passwords entered must match</p>");
@@ -168,7 +168,7 @@ var app = {
                     type: 'POST',
                     url: 'http://138.197.130.124/resetPasswordNewPassword.php',
                     data: {
-                        emailAddress: emailAddress,
+                        emailAddress: sessionStorage.getItem("emailReset"),
                         newPassword: newPassword
                     },
                     success: function(){
