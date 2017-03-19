@@ -80,7 +80,7 @@ var app = {
             });
         }
 
-        $('#settingsPage').on('pageshow', function (e) {
+        $('#settingsPage').on('pagebeforeshow', function (e) {
             app.ChangePassword.init();
             app.ChangePassword.$confirmBtn.off("tap").on("tap", function () {
                 app.ChangePassword.onPassChange();
@@ -150,11 +150,11 @@ var app = {
             var errMsg = $('#endResetErr');
             errMsg.html("");
             errMsg.removeClass().addClass(invisibleStyle);
-            if(newPassword.length == 0) {
+            if(newPassword.length === 0) {
                 $('#txt-new-password').addClass(invalidInputStyle);
                 errMsg.html("<p>Password must be entered.</p>");
                 errMsg.addClass("bi-ctn-err").slideDown();
-            }else if(newPasswordConfirm.length == 0) {
+            }else if(newPasswordConfirm.length === 0) {
                 $('#txt-new-password-confirm').addClass(invalidInputStyle);
                 errMsg.html("<p>Must confirm new password.</p>");
                 errMsg.addClass("bi-ctn-err").slideDown();
@@ -193,7 +193,7 @@ var app = {
             }
         });
 
-        $('#sign-in').on('pageshow', function (e) {
+        $('#sign-in').on('pagebeforeshow', function (e) {
             app.signInController.init();
             app.signInController.resetSignIn();
             app.signInController.$btnSubmit.off("tap").on("tap", function () {
@@ -201,7 +201,7 @@ var app = {
             });
         });
 
-        $('#sign-up').on('pageshow', function (e) {
+        $('#sign-up').on('pagebeforeshow', function (e) {
             app.signUpController.init();
             app.signUpController.resetSignUp();
             app.signUpController.$Submit.off("tap").on("tap", function () {
@@ -209,15 +209,15 @@ var app = {
             });
         });
 
-        $('#settingsPage').on('pageshow', function (e) {
+        $('#settingsPage').on('pagebeforeshow', function (e) {
             app.ChangePassword.resetSettings();
         });
 
-        $('#begin-password-reset').on('pageshow', function (e) {
+        $('#begin-password-reset').on('pagebeforeshow', function (e) {
             resetBeginReset();
         });
 
-        $('#end-password-reset').on('pageshow', function (e) {
+        $('#end-password-reset').on('pagebeforeshow', function (e) {
             resetEndReset();
         });
 

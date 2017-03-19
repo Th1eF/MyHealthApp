@@ -45,6 +45,12 @@ SignIn.ChangePassword.prototype.onPassChange = function () {
         invisibleStyle = "bi-invisible",
         invalidInputStyle = "bi-invalid-input";
 
+    user.$errmsg.html("");
+    user.$ctnErr.removeClass().addClass(invisibleStyle);
+    user.$newPasswordConfirm.removeClass(invalidInputStyle);
+    user.$newPassword.removeClass(invalidInputStyle);
+    user.$oldPassword.removeClass(invalidInputStyle);
+
     if(newPassword === newPasswordConfirm){
         console.log(oldPassword);
         console.log(newPassword);
@@ -70,6 +76,8 @@ SignIn.ChangePassword.prototype.onPassChange = function () {
                 user.$ctnErr.html("<p>Error</p>");
                 user.$ctnErr.addClass("bi-ctn-err").slideDown();
                 user.$EmailAddress.addClass(invalidInputStyle);
+                user.$newPassword.addClass(invalidInputStyle);
+                user.$newPasswordConfirm.addClass(invalidInputStyle);
             }
         });
     }else{

@@ -87,6 +87,7 @@ SignIn.SignUpController.prototype.onSignUp = function () {
         this.$ctnErr.addClass("bi-ctn-err").slideDown();
         this.$Password.addClass(invalidInputStyle);
         this.$PasswordConfirm.addClass(invalidInputStyle);
+        return;
     }
 
     if(this.passwordsMatch(password, passwordConfirm) && this.emailAddressIsValid(emailAddress)){
