@@ -93,7 +93,10 @@ var app = {
             var errMsg = $('#beginResetErr');
             sessionStorage.setItem("emailReset", emailAddress);
             errMsg.html("");
-            errMsg.removeClass().addClass(invisibleStyle);
+            errMsg.removeClass().removeClass().addClass(invisibleStyle);
+            $('#txt-email').removeClass(invalidInputStyle);
+            $('#token').removeClass(invalidInputStyle);
+
             if(token){
                 $.ajax({
                     type: 'POST',
@@ -150,6 +153,8 @@ var app = {
             var errMsg = $('#endResetErr');
             errMsg.html("");
             errMsg.removeClass().addClass(invisibleStyle);
+            $('#txt-new-password').removeClass(invalidInputStyle);
+            $('#txt-new-password-confirm').removeClass(invalidInputStyle);
             if(newPassword.length === 0) {
                 $('#txt-new-password').addClass(invalidInputStyle);
                 errMsg.html("<p>Password must be entered.</p>");
@@ -162,6 +167,22 @@ var app = {
                 $('#txt-new-password').addClass(invalidInputStyle);
                 $('#txt-new-password-confirm').addClass(invalidInputStyle);
                 errMsg.html("<p>Passwords entered must match</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else if (newPassword.length < 8) {
+                $('#txt-new-password').addClass(invalidInputStyle);
+                errMsg.html("<p>Password must be at least 8 characters</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else if (!/[A-Z]/.test(newPassword)) {
+                $('#txt-new-password').addClass(invalidInputStyle);
+                errMsg.html("<p>Password must contain at least one uppercase letter</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else if (!/[a-z]/.test(newPassword)) {
+                $('#txt-new-password').addClass(invalidInputStyle);
+                errMsg.html("<p>Password must contain at least one lowercase letter</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else if (!/\d/.test(newPassword)) {
+                $('#txt-new-password').addClass(invalidInputStyle);
+                errMsg.html("<p>Password must contain at least one number</p>");
                 errMsg.addClass("bi-ctn-err").slideDown();
             }else{
                 $.ajax({

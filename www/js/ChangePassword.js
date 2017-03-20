@@ -51,6 +51,34 @@ SignIn.ChangePassword.prototype.onPassChange = function () {
     user.$newPassword.removeClass(invalidInputStyle);
     user.$oldPassword.removeClass(invalidInputStyle);
 
+    if (newPassword.length < 8) {
+        this.$newPassword.addClass(invalidInputStyle);
+        this.$errmsg.html("<p>Password must be at least 8 characters</p>");
+        this.$errmsg.addClass("bi-ctn-err").slideDown();
+        return;
+    }
+
+    if (!/[A-Z]/.test(newPassword)) {
+        this.$newPassword.addClass(invalidInputStyle);
+        this.$errmsg.html("<p>Password must contain at least one uppercase letter</p>");
+        this.$errmsg.addClass("bi-ctn-err").slideDown();
+        return;
+    }
+
+    if (!/[a-z]/.test(newPassword)) {
+        this.$newPassword.addClass(invalidInputStyle);
+        this.$errmsg.html("<p>Password must contain at least one lowercase letter</p>");
+        this.$errmsg.addClass("bi-ctn-err").slideDown();
+        return;
+    }
+
+    if (!/\d/.test(newPassword)) {
+        this.$newPassword.addClass(invalidInputStyle);
+        this.$errmsg.html("<p>Password must contain at least one number</p>");
+        this.$errmsg.addClass("bi-ctn-err").slideDown();
+        return;
+    }
+
     if(newPassword === newPasswordConfirm){
         console.log(oldPassword);
         console.log(newPassword);
