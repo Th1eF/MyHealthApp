@@ -12,7 +12,6 @@ if (!$link) {
 }
 
 $datePast = $_GET["datePast"];
-$dateCurr = $_GET["dateCurr"];
 $auth = $_GET["auth"];
 
 $timeArray = array();
