@@ -1,4 +1,7 @@
 var sensorData = (function(){
+    var checkingLocation = false;
+    var previousLocation = "";
+    var prevTime = new Date().getTime() / 1000;
     var init = function(){
         //-----------------------------------------------------------------------
         //Pedometer
@@ -56,10 +59,11 @@ var sensorData = (function(){
             var speed = position.coords.speed;
             lastLat = latitude;
             lastLong = longitude;
+            Config.latitude = latitude;
+            Config.longitude = longitude;
             lastSpeed = speed;
             lastTimeStamp = position.timestamp;
             $('#lat').text("Latitude: " + latitude);
-            console.log(latitude);
             $('#long').text("Longitude: " + longitude);
             $('#speed').text("Speed: " + speed + " m/s");
             /*console.log('Latitude: '          + position.coords.latitude          + '\n' +
@@ -71,7 +75,6 @@ var sensorData = (function(){
              'Speed: '             + position.coords.speed             + '\n' +
              'Timestamp: '         + position.timestamp                + '\n');*/
         };
-
         function geoError(error) {
             console.log('code: '    + error.code    + '\n' +
                 'message: ' + error.message + '\n');
@@ -109,7 +112,11 @@ var sensorData = (function(){
 
          window.setInterval(function(){
              upload(lastTimeStamp, lastLat, lastLong, lastSpeed, lastStep, "", "", "");
-         }, 5000)
+         }, 5000);
+
+        window.setInterval(function(){
+            uploadLocations(lastTimeStamp, lastLat, lastLong, lastSpeed, lastStep, "");
+        }, 30000)
     };
 
     var upload = function(timestamp, latitude, longitude, speed, steps, bpm, visit, duration){
@@ -142,5 +149,104 @@ var sensorData = (function(){
         }
     };
 
+    var uploadLocations = function(timestamp, latitude, longitude, speed, steps, bpm){
+        if(Config.loggedIn && Config.uploadData){
+            console.log("Retrieving places near " + Config.latitude + " , " + Config.longitude);
+            $.ajax({
+                type: 'GET',
+                url: 'http://138.197.130.124/getPlaces.php',
+                data: {
+                    latitude: Config.latitude,
+                    longitude: Config.longitude
+                },
+                dataType: 'json',
+                success: function(locations){
+                    console.log(locations);
+                    try{
+                        var visit = locations["result"][0].name;
+                    }catch(e){
+                        console.log("uploading location data");
+                        console.log(e);
+                        var duration = (new Date().getTime() / 1000) - prevTime;
+                        if(checkingLocation){
+                            $.ajax({
+                                type: 'POST',
+                                url: 'http://138.197.130.124/uploadVisits.php',
+                                data: {
+                                    timestamp: timestamp,
+                                    latitude: latitude,
+                                    longitude: longitude,
+                                    speed: speed,
+                                    steps: steps,
+                                    bpm: bpm,
+                                    visit: previousLocation,
+                                    duration: Math.round(duration),
+                                    auth: Config.authToken
+                                },
+                                success: function(){
+                                    console.log("Successfully added visit location: " + previousLocation);
+                                    //End location tracking
+                                    checkingLocation = false;
+                                    previousLocation = "";
+                                    prevTime = 0;
+                                },
+                                error: function(xhr, ajaxOptions, thrownError){
+                                    console.log("Error Code: " + xhr.status);
+                                    console.log("Error Response: " + xhr.responseText);
+                                    console.log("Thrown Error: " + thrownError);
+                                }
+                            });
+                        }
+                    }
+                    console.log(previousLocation);
+                    if(visit.length > 0){
+                        if(checkingLocation){
+                            if(previousLocation != visit){
+                                //Moved locations possibly, end tracking this current location, upload data
+                                var duration = (new Date().getTime() / 1000) - prevTime;
+                                checkingLocation = false;
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'http://138.197.130.124/updateVisits.php',
+                                    data: {
+                                        timestamp: timestamp,
+                                        latitude: latitude,
+                                        longitude: longitude,
+                                        speed: speed,
+                                        steps: steps,
+                                        bpm: bpm,
+                                        visit: previousLocation,
+                                        duration: Math.round(duration),
+                                        auth: Config.authToken
+                                    },
+                                    success: function(){
+                                        console.log("Successfully added visit location: " + previousLocation);
+                                    },
+                                    error: function(xhr, ajaxOptions, thrownError){
+                                        console.log("Error Code: " + xhr.status);
+                                        console.log("Error Response: " + xhr.responseText);
+                                        console.log("Thrown Error: " + thrownError);
+                                    }
+                                });
+                            }
+                        }else{
+                            //Begin tracking
+                            prevTime = new Date().getTime() / 1000;
+                            checkingLocation = true;
+                            previousLocation = visit;
+                        }
+                    }
+
+                },
+                error: function(xhr, ajaxOptions, thrownError){
+                    console.log("Error Code: " + xhr.status);
+                    console.log("Error Response: " + xhr.responseText);
+                    console.log("Thrown Error: " + thrownError);
+                }
+            });
+        }else{
+            console.log("Not uploading Locations [loggedIn] = " + Config.loggedIn + " , [uploadData] = " + Config.uploadData);
+        }
+    };
     return {init: init}
 })();

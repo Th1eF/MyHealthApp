@@ -80,6 +80,61 @@ var app = {
             });
         }
 
+        /*$('#getPlaces').on('click', function(e){
+            console.log("Retrieving places near " + Config.latitude + " , " + Config.longitude);
+            $.ajax({
+                type: 'GET',
+                url: 'http://138.197.130.124/getPlaces.php',
+                data: {
+                    latitude: Config.latitude,
+                    longitude: Config.longitude
+                },
+                dataType: 'json',
+                success: function(locations){
+                    console.log(locations);
+                    console.log(locations["result"][0].name);
+                },
+                error: function(xhr, ajaxOptions, thrownError){
+                    console.log("Error Code: " + xhr.status);
+                    console.log("Error Response: " + xhr.responseText);
+                    console.log("Thrown Error: " + thrownError);
+                }
+            });
+        });*/
+
+        $('#submitGoals').on('click', function(e){
+            console.log("Goals button pressed");
+            var goalSteps = $('#stepGoal').val().trim();
+            var goalWeight = $('#weightGoal').val().trim();
+            var currWeight = $('#currWeight').val().trim();
+            //TODO Disallow goalSteps, goalWeight, currWeight from blank input
+            if(goalSteps.length === 0 || goalWeight.length === 0 || currWeight.length === 0){
+                console.log("invalid inputs in goal page");
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://138.197.130.124/setGoals.php',
+                    data: {
+                        auth: Config.authToken,
+                        goalSteps: goalSteps,
+                        goalWeight: goalWeight,
+                        currWeight: currWeight
+                    },
+                    success: function(){
+                        console.log("Updated goals successfully");
+                        $('#stepGoal').val("");
+                        $('#weightGoal').val("");
+                        $('#currWeight').val("");
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        console.log("Error Code: " + xhr.status);
+                        console.log("Error Response: " + xhr.responseText);
+                        console.log("Thrown Error: " + thrownError);
+                    }
+                });
+            }
+        });
+
         $('#settingsPage').on('pagebeforeshow', function (e) {
             app.ChangePassword.init();
             app.ChangePassword.$confirmBtn.off("tap").on("tap", function () {
