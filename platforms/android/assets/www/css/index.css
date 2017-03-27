@@ -38,6 +38,7 @@
     background-attachment:fixed;
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size:12px;
+    color: black;
     height:auto;
     margin:0;
     padding:0;
@@ -45,6 +46,10 @@
     width:100%;
     overflow: hidden;
 
+}
+
+label {
+    color: black;
 }
 
 /* Portrait layout (default) */
@@ -91,6 +96,9 @@ h1 {
 
 body, html{
     overflow:hidden;
+    line-height: 1.42857143;
+    color: black;
+
 }
 
 .event.listening {

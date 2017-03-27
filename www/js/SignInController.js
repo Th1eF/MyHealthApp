@@ -52,7 +52,7 @@ SignIn.SignInController.prototype.onSignIn = function () {
         invisibleStyle = "bi-invisible",
         invalidInputStyle = "bi-invalid-input";
 
-    this.$ctnErr.html("");
+    user.$ctnErr.html("");
     user.$ctnErr.removeClass().addClass(invisibleStyle);
     user.$txtEmailAddress.removeClass(invalidInputStyle);
     user.$txtPassword.removeClass(invalidInputStyle);

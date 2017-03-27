@@ -17,8 +17,13 @@ var app = {
         app.receivedEvent('deviceready');
         app.signUpController = new SignIn.SignUpController();
         app.signInController = new SignIn.SignInController();
+        app.ChangePassword = new SignIn.ChangePassword();
+
+        var invisibleStyle = "bi-invisible";
+        var invalidInputStyle = "bi-invalid-input";
 
         sensorData.init();
+        generateGraphs.init();
 
         //Check if authToken in localstorage
         if(typeof(Storage !== "undefined")){
@@ -75,235 +80,221 @@ var app = {
             });
         }
 
-
-
-        $('#toMain').on('click', function(){
-            $("#statsContainer").hide();
-            clearGraphs();
-        });
-
-        function clearGraphs(){
-            $('#visitStats').empty();
-            $('#healthStats').empty();
-        }
-
-        $('#statsPage').on('pageshow', function(e){
-           console.log('page shown');
-            $("#statsContainer").show();
-
-            $("#radio-choice-v-6a").click(function(){
-               console.log("one week checked");
-                $("#timePopContent").popup('close');
-                var weekTime = 604800000;
-                var currTime = lastTimeStamp;
-                var pastTime = currTime - weekTime;
-                //datePast, dateCurr
-                getData(pastTime, currTime, function(callback){
-                    console.log(callback);
-                    var avgBPM = callback["Heart Rate"].BPMAvg;
-                    var gymVisit = callback["Lakehead Hangar"].totalVisits;
-                    var gymDur = callback["Lakehead Hangar"].avgDuration;
-                    var mcVisit = callback["McDonalds"].totalVisits;
-                    var mcDur = callback["McDonalds"].avgDuration;
-                    console.log(avgBPM + " " + gymVisit + " " +  gymDur + " " +  mcVisit + " " +  mcDur);
-                    if((mcVisit == 0 || mcVisit == null || mcDur == 0 || mcDur == null) && (gymVisit == 0 || gymVisit == null || gymDur == 0 || gymDur == null)) {
-                        var visitStats = [['No Statistics Found', 0]];
-                        var healthStats = [['Steps', lastStep], ['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }else if(gymVisit == 0 || gymVisit == null || gymDur == 0 || gymDur == null){
-                        var visitStats = [['McDonalds', mcVisit], ['McD Avg(s)', mcDur]];
-                        var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }else if(mcVisit == 0 || mcVisit == null || mcDur == 0 || mcDur == null){
-                        var visitStats = [['Lakehead Hangar', gymVisit], ['Gym Avg(s)', gymDur]];
-                        var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }else{
-                        var visitStats = [['Lakehead Hangar', gymVisit], ['Gym Avg(s)', gymDur], ['McDonalds', mcVisit], ['McD Avg(s)', mcDur]];
-                        var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }
-                });
-            });
-
-            $("#radio-choice-v-6b").click(function(){
-                console.log("3 days");
-                $("#timePopContent").popup('close');
-                var threeDayTime = 259200000;
-                var currTime = lastTimeStamp;
-                var pastTime = currTime - threeDayTime;
-                //datePast, dateCurr
-                //var visitStats = [['Gym', 4],['McDonalds', 2]];
-                //var healthStats = [['Steps', 500],['Avg BPM', 70]];
-                getData(pastTime, currTime, function(callback){
-                    console.log(callback);
-                    var avgBPM = callback["Heart Rate"].BPMAvg;
-                    var gymVisit = callback["Lakehead Hangar"].totalVisits;
-                    var gymDur = callback["Lakehead Hangar"].avgDuration;
-                    var mcVisit = callback["McDonalds"].totalVisits;
-                    var mcDur = callback["McDonalds"].avgDuration;
-                    console.log(avgBPM + " " + gymVisit + " " +  gymDur + " " +  mcVisit + " " +  mcDur);
-                    if((mcVisit == 0 || mcVisit == null || mcDur == 0 || mcDur == null) && (gymVisit == 0 || gymVisit == null || gymDur == 0 || gymDur == null)) {
-                        var visitStats = [['No Statistics Found', 0]];
-                        var healthStats = [['Steps', lastStep], ['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }else if(gymVisit == 0 || gymVisit == null || gymDur == 0 || gymDur == null){
-                        var visitStats = [['McDonalds', mcVisit], ['McD Avg(s)', mcDur]];
-                        var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }else if(mcVisit == 0 || mcVisit == null || mcDur == 0 || mcDur == null){
-                        var visitStats = [['Lakehead Hangar', gymVisit], ['Gym Avg(s)', gymDur]];
-                        var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }else{
-                        var visitStats = [['Lakehead Hangar', gymVisit], ['Gym Avg(s)', gymDur], ['McDonalds', mcVisit], ['McD Avg(s)', mcDur]];
-                        var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }
-                });
-            });
-
-            $("#radio-choice-v-6c").click(function(){
-                console.log("1 day");
-                $("#timePopContent").popup('close');
-                var dayTime = 86400000;
-                var currTime = lastTimeStamp;
-                var pastTime = currTime - dayTime;
-                //datePast, dateCurr
-                getData(pastTime, currTime, function(callback){
-                    console.log(callback);
-                    var avgBPM = callback["Heart Rate"].BPMAvg;
-                    var gymVisit = callback["Lakehead Hangar"].totalVisits;
-                    var gymDur = callback["Lakehead Hangar"].avgDuration;
-                    var mcVisit = callback["McDonalds"].totalVisits;
-                    var mcDur = callback["McDonalds"].avgDuration;
-                    console.log(avgBPM + " " + gymVisit + " " +  gymDur + " " +  mcVisit + " " +  mcDur);
-                    if((mcVisit == 0 || mcVisit == null || mcDur == 0 || mcDur == null) && (gymVisit == 0 || gymVisit == null || gymDur == 0 || gymDur == null)) {
-                        var visitStats = [['No Statistics Found', 0]];
-                        var healthStats = [['Steps', lastStep], ['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }else if(gymVisit == 0 || gymVisit == null || gymDur == 0 || gymDur == null){
-                        var visitStats = [['McDonalds', mcVisit], ['McD Avg(s)', mcDur]];
-                        var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }else if(mcVisit == 0 || mcVisit == null || mcDur == 0 || mcDur == null){
-                        var visitStats = [['Lakehead Hangar', gymVisit], ['Gym Avg(s)', gymDur]];
-                        var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }else{
-                        var visitStats = [['Lakehead Hangar', gymVisit], ['Gym Avg(s)', gymDur], ['McDonalds', mcVisit], ['McD Avg(s)', mcDur]];
-                        var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }
-                });
-            });
-
-            $("#radio-choice-v-6d").click(function(){
-                console.log("one hour");
-                $("#timePopContent").popup('close');
-                var hourTime = 3600000;
-                var currTime = lastTimeStamp;
-                var pastTime = currTime - hourTime;
-                //datePast, dateCurr
-                getData(pastTime, currTime, function(callback){
-                    console.log(callback);
-                    var avgBPM = callback["Heart Rate"].BPMAvg;
-                    var gymVisit = callback["Lakehead Hangar"].totalVisits;
-                    var gymDur = callback["Lakehead Hangar"].avgDuration;
-                    var mcVisit = callback["McDonalds"].totalVisits;
-                    var mcDur = callback["McDonalds"].avgDuration;
-                    console.log(avgBPM + " " + gymVisit + " " +  gymDur + " " +  mcVisit + " " +  mcDur);
-                    if((mcVisit == 0 || mcVisit == null || mcDur == 0 || mcDur == null) && (gymVisit == 0 || gymVisit == null || gymDur == 0 || gymDur == null)) {
-                        var visitStats = [['No Statistics Found', 0]];
-                        var healthStats = [['Steps', lastStep], ['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }else if(gymVisit == 0 || gymVisit == null || gymDur == 0 || gymDur == null){
-                        var visitStats = [['McDonalds', mcVisit], ['McD Avg(s)', mcDur]];
-                        var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }else if(mcVisit == 0 || mcVisit == null || mcDur == 0 || mcDur == null){
-                        var visitStats = [['Lakehead Hangar', gymVisit], ['Gym Avg(s)', gymDur]];
-                        var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }else{
-                        var visitStats = [['Lakehead Hangar', gymVisit], ['Gym Avg(s)', gymDur], ['McDonalds', mcVisit], ['McD Avg(s)', mcDur]];
-                        var healthStats = [['Steps', lastStep],['Avg BPM', avgBPM]];
-                        createGraphs(visitStats, healthStats);
-                    }
-                });
-            });
-
-            function createGraphs(visitStats, healthStats){
-                clearGraphs();
-
-                $('#visitStats').jqplot([visitStats], {
-                    animate: !$.jqplot.use_excanvas,
-                    title:'Visit Stats',
-                    seriesDefaults:{
-                        renderer:$.jqplot.BarRenderer,
-                        pointLabels: {show: true},
-                        rendererOptions:{
-                            varyBarColor: true
-                        }
-                    },
-                    axes:{
-                        xaxis:{
-                            renderer: $.jqplot.CategoryAxisRenderer
-                        }
-                    }
-                });
-
-                $('#healthStats').jqplot([healthStats], {
-                    animate: !$.jqplot.use_excanvas,
-                    title:'Health Stats',
-                    seriesDefaults:{
-                        renderer:$.jqplot.BarRenderer,
-                        pointLabels: {show: true},
-                        rendererOptions:{
-                            varyBarColor: true
-                        }
-                    },
-                    axes:{
-                        xaxis:{
-                            renderer: $.jqplot.CategoryAxisRenderer
-                        }
-                    }
-                });
-            }
-        });
-
-
-        $(document).on("pagecontainerbeforeshow", function (event, ui) {
-            if (typeof ui.toPage == "object") {
-                switch (ui.toPage.attr("id")) {
-                    case "page-signup":
-                        app.signUpController.resetSignUp();
-                        break;
-
-                    case "page-signin":
-                        app.signInController.resetSignIn();
-                        break;
+        /*$('#getPlaces').on('click', function(e){
+            console.log("Retrieving places near " + Config.latitude + " , " + Config.longitude);
+            $.ajax({
+                type: 'GET',
+                url: 'http://138.197.130.124/getPlaces.php',
+                data: {
+                    latitude: Config.latitude,
+                    longitude: Config.longitude
+                },
+                dataType: 'json',
+                success: function(locations){
+                    console.log(locations);
+                    console.log(locations["result"][0].name);
+                },
+                error: function(xhr, ajaxOptions, thrownError){
+                    console.log("Error Code: " + xhr.status);
+                    console.log("Error Response: " + xhr.responseText);
+                    console.log("Thrown Error: " + thrownError);
                 }
+            });
+        });*/
+
+        $('#submitGoals').on('click', function(e){
+            console.log("Goals button pressed");
+            var goalSteps = $('#stepGoal').val().trim();
+            var goalWeight = $('#weightGoal').val().trim();
+            var currWeight = $('#currWeight').val().trim();
+            //TODO Disallow goalSteps, goalWeight, currWeight from blank input
+            if(goalSteps.length === 0 || goalWeight.length === 0 || currWeight.length === 0){
+                console.log("invalid inputs in goal page");
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://138.197.130.124/setGoals.php',
+                    data: {
+                        auth: Config.authToken,
+                        goalSteps: goalSteps,
+                        goalWeight: goalWeight,
+                        currWeight: currWeight
+                    },
+                    success: function(){
+                        console.log("Updated goals successfully");
+                        $('#stepGoal').val("");
+                        $('#weightGoal').val("");
+                        $('#currWeight').val("");
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        console.log("Error Code: " + xhr.status);
+                        console.log("Error Response: " + xhr.responseText);
+                        console.log("Thrown Error: " + thrownError);
+                    }
+                });
             }
         });
 
-        $('#sign-in').on('pageshow', function (e) {
+        $('#settingsPage').on('pagebeforeshow', function (e) {
+            app.ChangePassword.init();
+            app.ChangePassword.$confirmBtn.off("tap").on("tap", function () {
+                app.ChangePassword.onPassChange();
+            });
+        });
+
+        $('#beginResetPasswordButton').on('click', function(){
+            var emailAddress = $('#txt-email').val().trim();
+            var token = $('#token').val().trim();
+            var errMsg = $('#beginResetErr');
+            sessionStorage.setItem("emailReset", emailAddress);
+            errMsg.html("");
+            errMsg.removeClass().removeClass().addClass(invisibleStyle);
+            $('#txt-email').removeClass(invalidInputStyle);
+            $('#token').removeClass(invalidInputStyle);
+
+            if(token){
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://138.197.130.124/resetPasswordVerifyCode.php',
+                    data: {
+                        emailAddress: emailAddress,
+                        token: token
+                    },
+                    success: function(){
+                        console.log("Token is valid, going to reset password page");
+                        $.mobile.navigate("#end-password-reset", {transition: "slide"});
+
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        console.log("Error Code: " + xhr.status);
+                        console.log("Error Response: " + xhr.responseText);
+                        console.log("Thrown Error: " + thrownError);
+                        errMsg.html("<p>Invalid login credentials.</p>");
+                        errMsg.addClass("bi-ctn-err").slideDown();
+                        $('#txt-email').addClass(invalidInputStyle);
+                        $('#token').addClass(invalidInputStyle);
+                    }
+                });
+            }
+            else{
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://138.197.130.124/resetPasswordSendToken.php',
+                    data: {
+                        emailAddress: emailAddress
+                    },
+                    success: function(){
+                        console.log("Sent code to reset password");
+                        //TODO MAKE TOKEN AND LABEL VISIBLE ONLY AFTER CODE IS SENT
+                        //$('#token').style.visibility = "visible";
+                        //$('#tokenLabel').style.visibility = "visible";
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        console.log("Error Code: " + xhr.status);
+                        console.log("Error Response: " + xhr.responseText);
+                        console.log("Thrown Error: " + thrownError);
+                        errMsg.html("<p>Invalid login credentials.</p>");
+                        errMsg.addClass("bi-ctn-err").slideDown();
+                        $('#txt-email').addClass(invalidInputStyle);
+                        $('#token').addClass(invalidInputStyle);
+                    }
+                });
+            }
+        });
+
+        $('#endResetPasswordButton').on('click', function(){
+            var newPassword = $('#txt-new-password').val().trim();
+            var newPasswordConfirm = $('#txt-new-password-confirm').val().trim();
+            var errMsg = $('#endResetErr');
+            errMsg.html("");
+            errMsg.removeClass().addClass(invisibleStyle);
+            $('#txt-new-password').removeClass(invalidInputStyle);
+            $('#txt-new-password-confirm').removeClass(invalidInputStyle);
+            if(newPassword.length === 0) {
+                $('#txt-new-password').addClass(invalidInputStyle);
+                errMsg.html("<p>Password must be entered.</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else if(newPasswordConfirm.length === 0) {
+                $('#txt-new-password-confirm').addClass(invalidInputStyle);
+                errMsg.html("<p>Must confirm new password.</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else if(!newPassword === newPasswordConfirm) {
+                $('#txt-new-password').addClass(invalidInputStyle);
+                $('#txt-new-password-confirm').addClass(invalidInputStyle);
+                errMsg.html("<p>Passwords entered must match</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else if (newPassword.length < 8) {
+                $('#txt-new-password').addClass(invalidInputStyle);
+                errMsg.html("<p>Password must be at least 8 characters</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else if (!/[A-Z]/.test(newPassword)) {
+                $('#txt-new-password').addClass(invalidInputStyle);
+                errMsg.html("<p>Password must contain at least one uppercase letter</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else if (!/[a-z]/.test(newPassword)) {
+                $('#txt-new-password').addClass(invalidInputStyle);
+                errMsg.html("<p>Password must contain at least one lowercase letter</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else if (!/\d/.test(newPassword)) {
+                $('#txt-new-password').addClass(invalidInputStyle);
+                errMsg.html("<p>Password must contain at least one number</p>");
+                errMsg.addClass("bi-ctn-err").slideDown();
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://138.197.130.124/resetPasswordNewPassword.php',
+                    data: {
+                        emailAddress: sessionStorage.getItem("emailReset"),
+                        newPassword: newPassword
+                    },
+                    success: function(){
+                        console.log("Reset Password successfully");
+                        $('#txt-email').val("");
+                        $('#token').val("");
+                        $('#txt-new-password').val("");
+                        $('#txt-new-password-confirm').val("");
+                        $.mobile.navigate("#sign-in", {transition: "slide"});
+                    },
+                    error: function(xhr, ajaxOptions, thrownError){
+                        console.log("Error Code: " + xhr.status);
+                        console.log("Error Response: " + xhr.responseText);
+                        console.log("Thrown Error: " + thrownError);
+                        errMsg.html("<p>Invalid login credentials.</p>");
+                        errMsg.addClass("bi-ctn-err").slideDown();
+                        $('#txt-email').addClass(invalidInputStyle);
+                        $('#txt-new-password').addClass(invalidInputStyle);
+                        $('#txt-new-password-confirm').addClass(invalidInputStyle);
+                    }
+                });
+            }
+        });
+
+        $('#sign-in').on('pagebeforeshow', function (e) {
             app.signInController.init();
+            app.signInController.resetSignIn();
             app.signInController.$btnSubmit.off("tap").on("tap", function () {
                 app.signInController.onSignIn();
             });
         });
 
-        $('#statsPage').on('pagehide', function(){
-            $("#statsContainer").hide();
-            clearGraphs();
-        });
-
-        $('#sign-up').on('pageshow', function (e) {
+        $('#sign-up').on('pagebeforeshow', function (e) {
             app.signUpController.init();
+            app.signUpController.resetSignUp();
             app.signUpController.$Submit.off("tap").on("tap", function () {
                 app.signUpController.onSignUp();
             });
+        });
+
+        $('#settingsPage').on('pagebeforeshow', function (e) {
+            app.ChangePassword.resetSettings();
+        });
+
+        $('#begin-password-reset').on('pagebeforeshow', function (e) {
+            resetBeginReset();
+        });
+
+        $('#end-password-reset').on('pagebeforeshow', function (e) {
+            resetEndReset();
         });
 
         $('#ToSignIn').on('click', function (e) {
@@ -327,51 +318,25 @@ var app = {
             $.mobile.navigate("#sign-in", {transition: "slideup"});
         });
 
-        //Send data to cloud database
-        /*function uploadData(timestamp, latitude, longitude, speed, steps, bpm, visit, duration, callback){
-            $.ajax({
-                type: 'POST',
-                url: 'http://138.197.130.124/uploadData.php',
-                data: {
-                    timestamp: timestamp,
-                    latitude: latitude,
-                    longitude: longitude,
-                    speed: speed,
-                    steps: steps,
-                    bpm: bpm,
-                    visit: visit,
-                    duration: duration
-                },
-                success: callback,
-                error: function(xhr, ajaxOptions, thrownError){
-                    console.log("Error Code: " + xhr.status);
-                    console.log("Error Response: " + xhr.responseText);
-                    console.log("Thrown Error: " + thrownError);
-                    callback(false);
-                }
-            });
-        }*/
-
-        //Get data from cloud database
-        function getData(datePast, dateCurr, callback) {
-            $.ajax({
-                type: 'GET',
-                url: 'http://138.197.130.124/getData.php',
-                data: {
-                    datePast: datePast,
-                    dateCurr: dateCurr
-                },
-                dataType: 'json',
-                success: callback,
-                error: function(xhr, ajaxOptions, thrownError){
-                    console.log("Error Code: " + xhr.status);
-                    console.log("Error Response: " + xhr.responseText);
-                    console.log("Thrown Error: " + thrownError);
-                    callback(false);
-                }
-            });
+        function resetBeginReset() {
+            $('#beginResetErr').html("");
+            $('#beginResetErr').removeClass().addClass(invisibleStyle);
+            $('#txt-email').removeClass(invalidInputStyle);
+            $('#token').removeClass(invalidInputStyle);
+            $('#txt-email').val("");
+            $('#token').val("");
         }
 
+        function resetEndReset() {
+            $('#endResetErr').html("");
+            $('#endResetErr').removeClass().addClass(invisibleStyle);
+            $('#txt-email').removeClass(invalidInputStyle);
+            $('#txt-new-password').removeClass(invalidInputStyle);
+            $('#txt-new-password-confirm').removeClass(invalidInputStyle);
+            $('#txt-email').val("");
+            $('#txt-new-password').val("");
+            $('#txt-new-password-confirm').val("");
+        }
 
         //Haversine formula
         function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
@@ -462,7 +427,6 @@ var app = {
             }
         }
     },
-
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {

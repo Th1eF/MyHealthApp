@@ -75,6 +75,34 @@ SignIn.SignUpController.prototype.onSignUp = function () {
         return;
     }
 
+    if (password.length < 8) {
+        this.$Password.addClass(invalidInputStyle);
+        this.$ctnErr.html("<p>Password must be at least 8 characters</p>");
+        this.$ctnErr.addClass("bi-ctn-err").slideDown();
+        return;
+    }
+
+    if (!/[A-Z]/.test(password)) {
+        this.$Password.addClass(invalidInputStyle);
+        this.$ctnErr.html("<p>Password must contain at least one uppercase letter</p>");
+        this.$ctnErr.addClass("bi-ctn-err").slideDown();
+        return;
+    }
+
+    if (!/[a-z]/.test(password)) {
+        this.$Password.addClass(invalidInputStyle);
+        this.$ctnErr.html("<p>Password must contain at least one lowercase letter</p>");
+        this.$ctnErr.addClass("bi-ctn-err").slideDown();
+        return;
+    }
+
+    if (!/\d/.test(password)) {
+        this.$Password.addClass(invalidInputStyle);
+        this.$ctnErr.html("<p>Password must contain at least one number</p>");
+        this.$ctnErr.addClass("bi-ctn-err").slideDown();
+        return;
+    }
+
     if (!this.emailAddressIsValid(emailAddress)) {
         this.$ctnErr.html("<p>Please enter a valid email address.</p>");
         this.$ctnErr.addClass("bi-ctn-err").slideDown();
@@ -87,6 +115,7 @@ SignIn.SignUpController.prototype.onSignUp = function () {
         this.$ctnErr.addClass("bi-ctn-err").slideDown();
         this.$Password.addClass(invalidInputStyle);
         this.$PasswordConfirm.addClass(invalidInputStyle);
+        return;
     }
 
     if(this.passwordsMatch(password, passwordConfirm) && this.emailAddressIsValid(emailAddress)){
@@ -147,9 +176,5 @@ SignIn.SignUpController.prototype.emailAddressIsValid = function (email) {
 
 SignIn.SignUpController.prototype.passwordsMatch = function (password, passwordConfirm) {
     return password === passwordConfirm;
-};
-
-SignIn.SignUpController.prototype.passwordComplexity = function (password) {
-    return true;
 };
 
