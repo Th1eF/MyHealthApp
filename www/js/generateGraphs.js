@@ -49,6 +49,7 @@ var generateGraphs = (function(){
                 var totalSteps = 0;
                 $.each(callback, function(key, value){
                     totalSteps += value;
+
                     stepsStats.push([key, value]);
                 });
                 console.log(stepsStats);
@@ -59,15 +60,45 @@ var generateGraphs = (function(){
                 });
             });
 
+            getBPMData(pastTime, "http://138.197.130.124/getBPMDay.php", function(callback){
+                console.log(callback);
+                var bpmStats = [];
+                var bpmArray = [];
+                var totalBPM = 0;
+                var validBPM = 0;
+                $.each(callback, function(key, value){
+                    if(value > 0){
+                        bpmArray.push(value);
+                        validBPM++;
+                    }else{
+                        value = 0;
+                    }
+                    totalBPM += value;
+                    bpmStats.push([key, value]);
+                });
+                console.log(bpmStats);
+                var avgBPM = "N/A";
+                if(validBPM > 0){
+                    avgBPM = totalBPM / validBPM;
+                }
+                var minBPM = Math.min.apply(null, bpmArray);
+                var maxBPM = Math.max.apply(null, bpmArray);
+
+                createBPMGraph(bpmStats, avgBPM, minBPM, maxBPM);
+            });
+
             $("#statsContainer").show();
         });
 
         function clearGraphs(){
+            console.log("clearing graphs");
             $('#stepsStats').empty();
             $('#locationStats').empty();
+            $('#bpmStats').empty();
         }
 
         $("#radio-choice-v-6a").click(function(){
+            clearGraphs();
             console.log("1 day");
             $("#timePopContent").popup('close');
             var dayTime = 86400000;
@@ -90,9 +121,36 @@ var generateGraphs = (function(){
                 });
             });
 
+            getBPMData(pastTime, "http://138.197.130.124/getBPMDay.php", function(callback){
+                console.log(callback);
+                var bpmStats = [];
+                var bpmArray = [];
+                var totalBPM = 0;
+                var validBPM = 0;
+                $.each(callback, function(key, value){
+                    if(value > 0){
+                        bpmArray.push(value);
+                        validBPM++;
+                    }else{
+                        value = 0;
+                    }
+                    totalBPM += value;
+                    bpmStats.push([key, value]);
+                });
+                console.log(bpmStats);
+                var avgBPM = "N/A";
+                if(validBPM > 0){
+                    avgBPM = totalBPM / validBPM;
+                }
+                var minBPM = Math.min.apply(null, bpmArray);
+                var maxBPM = Math.max.apply(null, bpmArray);
+
+                createBPMGraph(bpmStats, avgBPM, minBPM, maxBPM);
+            });
         });
 
         $("#radio-choice-v-6b").click(function(){
+            clearGraphs();
             console.log("3 days");
             $("#timePopContent").popup('close');
             var threeDayTime = 259200000;
@@ -114,11 +172,39 @@ var generateGraphs = (function(){
                     createGraph(stepsStats, totalSteps, goalSteps);
                 });
             });
+
+            getBPMData(pastTime, "http://138.197.130.124/getBPMThreeDays.php", function(callback){
+                console.log(callback);
+                var bpmStats = [];
+                var bpmArray = [];
+                var totalBPM = 0;
+                var validBPM = 0;
+                $.each(callback, function(key, value){
+                    if(value > 0){
+                        bpmArray.push(value);
+                        validBPM++;
+                    }else{
+                        value = 0;
+                    }
+                    totalBPM += value;
+                    bpmStats.push([key, value]);
+                });
+                console.log(bpmStats);
+                var avgBPM = "N/A";
+                if(validBPM > 0){
+                    avgBPM = totalBPM / validBPM;
+                }
+                var minBPM = Math.min.apply(null, bpmArray);
+                var maxBPM = Math.max.apply(null, bpmArray);
+
+                createBPMGraph(bpmStats, avgBPM, minBPM, maxBPM);
+            });
         });
 
 
         //TODO FINISH GENERATING GRAPH HOUR BY HOUR BREAK DOWN
         $("#radio-choice-v-6c").click(function(){
+            clearGraphs();
             console.log("one week checked");
             $("#timePopContent").popup('close');
             var weekTime = 604800000;
@@ -140,9 +226,37 @@ var generateGraphs = (function(){
                     createGraph(stepsStats, totalSteps, goalSteps);
                 });
             });
+
+            getBPMData(pastTime, "http://138.197.130.124/getBPMWeek.php", function(callback){
+                console.log(callback);
+                var bpmStats = [];
+                var bpmArray = [];
+                var totalBPM = 0;
+                var validBPM = 0;
+                $.each(callback, function(key, value){
+                    if(value > 0){
+                        bpmArray.push(value);
+                        validBPM++;
+                    }else{
+                        value = 0;
+                    }
+                    totalBPM += value;
+                    bpmStats.push([key, value]);
+                });
+                console.log(bpmStats);
+                var avgBPM = "N/A";
+                if(validBPM > 0){
+                    avgBPM = totalBPM / validBPM;
+                }
+                var minBPM = Math.min.apply(null, bpmArray);
+                var maxBPM = Math.max.apply(null, bpmArray);
+
+                createBPMGraph(bpmStats, avgBPM, minBPM, maxBPM);
+            });
         });
 
         $("#radio-choice-v-6d").click(function(){
+            clearGraphs();
             console.log("one week checked");
             $("#timePopContent").popup('close');
             var twoWeekTime = 1209600000;
@@ -163,11 +277,37 @@ var generateGraphs = (function(){
                     createGraph(stepsStats, totalSteps, goalSteps);
                 });
             });
+
+            getBPMData(pastTime, "http://138.197.130.124/getBPMTwoWeeks.php", function(callback){
+                console.log(callback);
+                var bpmStats = [];
+                var bpmArray = [];
+                var totalBPM = 0;
+                var validBPM = 0;
+                $.each(callback, function(key, value){
+                    if(value > 0){
+                        bpmArray.push(value);
+                        validBPM++;
+                    }else{
+                        value = 0;
+                    }
+                    totalBPM += value;
+                    bpmStats.push([key, value]);
+                });
+                console.log(bpmStats);
+                var avgBPM = "N/A";
+                if(validBPM > 0){
+                    avgBPM = totalBPM / validBPM;
+                }
+                var minBPM = Math.min.apply(null, bpmArray);
+                var maxBPM = Math.max.apply(null, bpmArray);
+
+                createBPMGraph(bpmStats, avgBPM, minBPM, maxBPM);
+            });
         });
 
 
         function createGraph(stepsStats, totalSteps, goalSteps){
-            clearGraphs();
 
             //TODO LOOK INTO WHY X AND Y AXIS APPEAR BLURRY
             $('#stepsStats').jqplot([stepsStats], {
@@ -184,7 +324,36 @@ var generateGraphs = (function(){
                     tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
                     tickOptions: {
                         angle: -90,
-                        fontSize: '8pt'
+                        fontSize: '8pt',
+                        formatString: '%d'
+                    }
+                },
+                axes:{
+                    xaxis:{
+                        renderer: $.jqplot.CategoryAxisRenderer
+                    }
+                }
+            });
+        }
+
+        function createBPMGraph(bpmStats, avgBPM, minBPM, maxBPM){
+            $('#bpmStats').jqplot([bpmStats], {
+                animate: !$.jqplot.use_excanvas,
+                title:'Peak Min: ' + minBPM + ' Peak Max: ' + maxBPM + ' Avg: ' + avgBPM,
+                seriesColors:['#fb0322'],
+                seriesDefaults:{
+                    renderer:$.jqplot.BarRenderer,
+                    pointLabels: {show: true},
+                    rendererOptions:{
+                        varyBarColor: true
+                    }
+                },
+                axesDefaults: {
+                    tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+                    tickOptions: {
+                        angle: -90,
+                        fontSize: '8pt',
+                        formatString: '%d'
                     }
                 },
                 axes:{
@@ -197,7 +366,6 @@ var generateGraphs = (function(){
 
         function createLocationGraph(ticks, locationDur, locationCount){
             clearGraphs();
-
             $('#locationStats').jqplot([locationDur, locationCount], {
                 animate: !$.jqplot.use_excanvas,
                 title:'Location History',
@@ -260,6 +428,25 @@ var generateGraphs = (function(){
                 type: 'GET',
                 url: "http://138.197.130.124/getSteps.php",
                 data: {
+                    auth: Config.authToken
+                },
+                dataType: 'json',
+                success: callback,
+                error: function(xhr, ajaxOptions, thrownError){
+                    console.log("Error Code: " + xhr.status);
+                    console.log("Error Response: " + xhr.responseText);
+                    console.log("Thrown Error: " + thrownError);
+                    callback(false);
+                }
+            });
+        }
+
+        function getBPMData(datePast, url, callback){
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: {
+                    datePast: datePast,
                     auth: Config.authToken
                 },
                 dataType: 'json',
