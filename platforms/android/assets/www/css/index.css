@@ -175,24 +175,9 @@ body, html{
     padding-bottom: 0.2em;
 }
 
-#myTime{
-    display: block;
-    width:20%;
-    margin:auto;
-    color: white;
-    background-color: #679efc;
-    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size: 1.1em;
-    border: none;
-    border-radius:4px;
-    text-align: center;
-    text-decoration: none;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-}
 
 #timePopContent{
-    background-color: #679efc;
+    background-color: #fafafa;
 }
 
 .bi-invalid-input {
@@ -260,6 +245,7 @@ h3.mc-text-danger  {
     -moz-box-sizing: border-box;
     background-color: #fb0322;
     padding: 0 16px;
+    font-size: small;
 }
 
 #credits {
@@ -287,3 +273,48 @@ h3.mc-text-danger  {
     opacity: 100;
     left: 0;
 }
+
+#mainPage{
+    box-sizing: initial;
+}
+
+.ui-link.ui-btn-left.ui-btn.ui-icon-bars.ui-btn-icon-notext.ui-corner-all::after {
+    width:14px;
+    height:14px;
+}
+
+#myTime::after {
+    width:14px;
+    height:14px;
+}
+
+#radio-choice-v-6a{
+    position: absolute;
+    opacity: 100;
+    left: 0;
+}
+
+#radio-choice-v-6b{
+    position: absolute;
+    opacity: 100;
+    left: 0;
+}
+
+#radio-choice-v-6c{
+    position: absolute;
+    opacity: 100;
+    left: 0;
+}
+
+#radio-choice-v-6d{
+    position: absolute;
+    opacity: 100;
+    left: 0;
+}
+
+#signed-in-label::after{
+    width: 0;
+    height: 0;
+}
+
+

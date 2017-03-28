@@ -38,12 +38,12 @@
     -->
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
     <script type="text/javascript" src="cordova.js"></script>
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="res/jquery/materialize.min.css"  media="screen,projection"/>
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <script src="res/jquery/jquery-1.11.1.min.js"></script>
     <script src="res/jquery/jquery.mobile-1.4.5.min.js"></script>
-    <link rel="stylesheet" href="res/jquery/jquery.mobile.structure-1.4.5.min.css">
+    <link rel="stylesheet" href="res/jquery/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="res/jquery/jquery.mobile.structure-1.4.5.min.css" />
 
     <script type="text/javascript" src="res/jquery/materialize.min.js"></script>
     <script src="res/jquery/jquery.jqplot.min.js"></script>
@@ -104,7 +104,7 @@
 
     <div class="background" id="sign-in" data-role="page">
         <div data-role="header" class="toolbar" data-position="fixed">
-            <a href="#page-index" data-icon="home" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
+            <a href="#page-index" data-iconpos="notext" data-transition="slide" data-direction="reverse"></a>
             <h1>LOGIN</h1>
         </div>
 
@@ -116,7 +116,7 @@
             <label for="passwordTxt">Password</label>
             <input type="password" name="passwordTxt" id="passwordTxt" value="">
             <input type="checkbox" id="signed-in" />
-            <label for="signed-in"> Keep me signed in</label>
+            <label id="signed-in-label" for="signed-in"> Keep me signed in</label>
             <p class="mc-top-margin-1-5"><a href="#begin-password-reset">Forgot Password?</a></p>
             <button data-position-to="window" id="submitButton" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</button>
             <p class="mc-text-center mc-top-margin-1-5"><b>No Account?</b></p>
@@ -171,17 +171,18 @@
         <!--Panel has to be first here-->
         <div data-role="panel" data-position="left" data-display="overlay" id="menuPanel" class="panels">
             <h4 class="panel_userName"></h4>
-            <a href="#mainPage"  class=" ui-btn ui-icon-home ui-btn-icon-left ui-corner-all">Home</a>
-            <a href="#statsPage" class="ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all">Stats</a>
-            <a href="#goalsPage" class=" ui-btn ui-icon-heart ui-btn-icon-left ui-corner-all">Goals</a>
-            <a href="#locationsPage" class=" ui-btn ui-icon-info ui-btn-icon-left ui-corner-all">Locations</a>
-            <a href="#settingsPage" class=" ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Settings</a>
-            <a href="#page-index" class="logoutButton ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Logout</a>
+            <a href="#mainPage"  class="ui-btn">Home</a>
+            <a href="#statsPage" class="ui-btn">Stats</a>
+            <a href="#goalsPage" class="ui-btn">Goals</a>
+            <a href="#locationsPage" class="ui-btn">Locations</a>
+            <a href="#settingsPage" class=" ui-btn">Settings</a>
+            <a href="#page-index" class="logoutButton ui-btn">Logout</a>
         </div>
 
         <div data-role="header" id="mainHeader" data-position="fixed" class="toolbar">
             <h1>MY HEALTH APP</h1>
-            <a href="#menuPanel" class="ui-nodisc-icon ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" data-role="button"></a>
+            <a href="#menuPanel" data-iconpos='left' data-shadow="false" data-iconshadow="false"
+               class="ui-link ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" data-role="button" ></a>
         </div>
 
         <div class="app">
@@ -211,12 +212,12 @@
         <!--Panel has to be first here-->
         <div data-role="panel" data-position="left" data-display="overlay" id="goalsPanel" class="panels">
             <h4 class="panel_userName"></h4>
-            <a href="#mainPage"  class="ui-nodisc-icon ui-btn ui-icon-home ui-btn-icon-left ui-corner-all">Home</a>
-            <a href="#statsPage" class="ui-nodisc-icon ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all">Stats</a>
-            <a href="#goalsPage" class="ui-nodisc-icon ui-btn ui-icon-heart ui-btn-icon-left ui-corner-all">Goals</a>
-            <a href="#locationsPage" class="ui-nodisc-icon ui-btn ui-icon-info ui-btn-icon-left ui-corner-all">Locations</a>
-            <a href="#settingsPage" class="ui-nodisc-icon ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Settings</a>
-            <a href="#page-index" class="logoutButton ui-nodisc-icon ui-btn ui-icon-back ui-btn-icon-left ui-corner-all">Logout</a>
+            <a href="#mainPage"  class="ui-btn">Home</a>
+            <a href="#statsPage" class="ui-btn">Stats</a>
+            <a href="#goalsPage" class="ui-btn">Goals</a>
+            <a href="#locationsPage" class="ui-btn">Locations</a>
+            <a href="#settingsPage" class=" ui-btn">Settings</a>
+            <a href="#page-index" class="logoutButton ui-btn">Logout</a>
         </div>
         <div data-role="header" id="goalsHeader" class="toolbar">
             <h1>GOALS</h1>
@@ -238,12 +239,12 @@
         <!--Panel has to be first here-->
         <div data-role="panel" data-position="left" data-display="overlay" id="locationPanel" class="panels">
             <h4 class="panel_userName"></h4>
-            <a href="#mainPage"  class="ui-nodisc-icon ui-btn ui-icon-home ui-btn-icon-left ui-corner-all">Home</a>
-            <a href="#statsPage" class="ui-nodisc-icon ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all">Stats</a>
-            <a href="#goalsPage" class="ui-nodisc-icon ui-btn ui-icon-heart ui-btn-icon-left ui-corner-all">Goals</a>
-            <a href="#locationsPage" class="ui-nodisc-icon ui-btn ui-icon-info ui-btn-icon-left ui-corner-all">Locations</a>
-            <a href="#settingsPage" class="ui-nodisc-icon ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Settings</a>
-            <a href="#page-index" class="logoutButton ui-nodisc-icon ui-btn ui-icon-back ui-btn-icon-left ui-corner-all">Logout</a>
+            <a href="#mainPage"  class="ui-btn">Home</a>
+            <a href="#statsPage" class="ui-btn">Stats</a>
+            <a href="#goalsPage" class="ui-btn">Goals</a>
+            <a href="#locationsPage" class="ui-btn">Locations</a>
+            <a href="#settingsPage" class=" ui-btn">Settings</a>
+            <a href="#page-index" class="logoutButton ui-btn">Logout</a>
         </div>
         <div data-role="header" id="locationsHeader" class="toolbar">
             <a href="#locationPanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
@@ -256,12 +257,12 @@
         <!--Panel has to be first here-->
         <div data-role="panel" data-position="left" data-display="overlay" id="settingsPanel" class="panels">
             <h4 class="panel_userName"></h4>
-            <a href="#mainPage"  class="ui-nodisc-icon ui-btn ui-icon-home ui-btn-icon-left ui-corner-all">Home</a>
-            <a href="#statsPage" class="ui-nodisc-icon ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all">Stats</a>
-            <a href="#goalsPage" class="ui-nodisc-icon ui-btn ui-icon-heart ui-btn-icon-left ui-corner-all">Goals</a>
-            <a href="#locationsPage" class="ui-nodisc-icon ui-btn ui-icon-info ui-btn-icon-left ui-corner-all">Locations</a>
-            <a href="#settingsPage" class="ui-nodisc-icon ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Settings</a>
-            <a href="#page-index" class="logoutButton ui-nodisc-icon ui-btn ui-icon-back ui-btn-icon-left ui-corner-all">Logout</a>
+            <a href="#mainPage"  class="ui-btn">Home</a>
+            <a href="#statsPage" class="ui-btn">Stats</a>
+            <a href="#goalsPage" class="ui-btn">Goals</a>
+            <a href="#locationsPage" class="ui-btn">Locations</a>
+            <a href="#settingsPage" class=" ui-btn">Settings</a>
+            <a href="#page-index" class="logoutButton ui-btn">Logout</a>
         </div>
         <div data-role="header" id="settingsHeader" class="toolbar">
             <a href="#settingsPanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
@@ -284,29 +285,30 @@
         <!--Panel has to be first here-->
         <div data-role="panel" data-position="left" data-display="overlay" id="statsPanel" class="panels">
             <h4 class="panel_userName"></h4>
-            <a href="#mainPage"  class="ui-nodisc-icon ui-btn ui-icon-home ui-btn-icon-left ui-corner-all">Home</a>
-            <a href="#statsPage" class="ui-nodisc-icon ui-btn ui-icon-edit ui-btn-icon-left ui-corner-all">Stats</a>
-            <a href="#goalsPage" class="ui-nodisc-icon ui-btn ui-icon-heart ui-btn-icon-left ui-corner-all">Goals</a>
-            <a href="#locationsPage" class="ui-nodisc-icon ui-btn ui-icon-info ui-btn-icon-left ui-corner-all">Locations</a>
-            <a href="#settingsPage" class="ui-nodisc-icon ui-btn ui-icon-gear ui-btn-icon-left ui-corner-all">Settings</a>
-            <a href="#page-index" class="logoutButton ui-nodisc-icon ui-btn ui-icon-back ui-btn-icon-left ui-corner-all">Logout</a>
+            <a href="#mainPage"  class="ui-btn">Home</a>
+            <a href="#statsPage" class="ui-btn">Stats</a>
+            <a href="#goalsPage" class="ui-btn">Goals</a>
+            <a href="#locationsPage" class="ui-btn">Locations</a>
+            <a href="#settingsPage" class=" ui-btn">Settings</a>
+            <a href="#page-index" class="logoutButton ui-btn">Logout</a>
         </div>
         <div data-role="header" id="statsHeader" class="toolbar">
             <a href="#statsPanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
                class="ui-link ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" data-role="button" role="button"></a>
             <h1>STATS PAGE</h1>
-            <a href="#timePopContent" id="myTime" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all">Time</a>
+            <a href="#timePopContent" id="myTime" data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+               data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all ui-icon-clock ui-btn-icon-notext ui-corner-all"></a>
 
             <div data-role="popup" id="timePopContent" class="ui-content">
                 <fieldset id="radioChoices" data-role="controlgroup" data-mini="true">
                     <legend>Retrieve Data For Time Period:</legend>
-                    <input type="radio" name="radio-choice-v-6" id="radio-choice-v-6a" value="on" checked="checked">
+                    <input type="radio" class="time-switch" name="radio-choice-v-6" id="radio-choice-v-6a" value="on" checked="checked">
                     <label for="radio-choice-v-6a">24 Hours</label>
-                    <input type="radio" name="radio-choice-v-6" id="radio-choice-v-6b" value="off">
+                    <input type="radio" class="time-switch" name="radio-choice-v-6" id="radio-choice-v-6b" value="off">
                     <label for="radio-choice-v-6b">3 Days</label>
-                    <input type="radio" name="radio-choice-v-6" id="radio-choice-v-6c" value="other">
+                    <input type="radio" class="time-switch" name="radio-choice-v-6" id="radio-choice-v-6c" value="other">
                     <label for="radio-choice-v-6c">1 Week</label>
-                    <input type="radio" name="radio-choice-v-6" id="radio-choice-v-6d" value="other">
+                    <input type="radio" class="time-switch" name="radio-choice-v-6" id="radio-choice-v-6d" value="other">
                     <label for="radio-choice-v-6d">2 Weeks</label>
                 </fieldset>
             </div>
