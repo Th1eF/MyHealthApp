@@ -281,3 +281,9 @@ h3.mc-text-danger  {
     width: auto;
     padding: 0;
 }
+
+#signed-in{
+    position: absolute;
+    opacity: 100;
+    left: 0;
+}
