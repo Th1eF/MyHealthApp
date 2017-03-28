@@ -169,7 +169,7 @@ var generateGraphs = (function(){
 
                 getSteps(function(goalSteps){
                     console.log(goalSteps);
-                    createGraph(stepsStats, totalSteps, goalSteps);
+                    createGraph(stepsStats, totalSteps, goalSteps*3);
                 });
             });
 
@@ -223,7 +223,7 @@ var generateGraphs = (function(){
 
                 getSteps(function(goalSteps){
                     console.log(goalSteps);
-                    createGraph(stepsStats, totalSteps, goalSteps);
+                    createGraph(stepsStats, totalSteps, goalSteps*7);
                 });
             });
 
@@ -257,7 +257,7 @@ var generateGraphs = (function(){
 
         $("#radio-choice-v-6d").click(function(){
             clearGraphs();
-            console.log("one week checked");
+            console.log("two week checked");
             $("#timePopContent").popup('close');
             var twoWeekTime = 1209600000;
             var currTime = new Date().getTime();
@@ -274,7 +274,7 @@ var generateGraphs = (function(){
 
                 getSteps(function(goalSteps){
                     console.log(goalSteps);
-                    createGraph(stepsStats, totalSteps, goalSteps);
+                    createGraph(stepsStats, totalSteps, goalSteps*14);
                 });
             });
 
@@ -339,7 +339,7 @@ var generateGraphs = (function(){
         function createBPMGraph(bpmStats, avgBPM, minBPM, maxBPM){
             $('#bpmStats').jqplot([bpmStats], {
                 animate: !$.jqplot.use_excanvas,
-                title:'Peak Min: ' + minBPM + ' Peak Max: ' + maxBPM + ' Avg: ' + avgBPM,
+                title:'Peak Min: ' + Math.round(minBPM) + ' Peak Max: ' + Math.round(maxBPM) + ' Avg: ' + Math.round(avgBPM),
                 seriesColors:['#fb0322'],
                 seriesDefaults:{
                     renderer:$.jqplot.BarRenderer,
@@ -410,7 +410,8 @@ var generateGraphs = (function(){
                 type: 'GET',
                 url: "http://138.197.130.124/getLocations.php",
                 data: {
-                    auth: Config.authToken
+                    auth: Config.authToken,
+                    dummyMode: Config.dummyMode
                 },
                 dataType: 'json',
                 success: callback,
@@ -428,7 +429,8 @@ var generateGraphs = (function(){
                 type: 'GET',
                 url: "http://138.197.130.124/getSteps.php",
                 data: {
-                    auth: Config.authToken
+                    auth: Config.authToken,
+                    dummyMode: Config.dummyMode
                 },
                 dataType: 'json',
                 success: callback,
@@ -447,7 +449,8 @@ var generateGraphs = (function(){
                 url: url,
                 data: {
                     datePast: datePast,
-                    auth: Config.authToken
+                    auth: Config.authToken,
+                    dummyMode: Config.dummyMode
                 },
                 dataType: 'json',
                 success: callback,
@@ -466,7 +469,8 @@ var generateGraphs = (function(){
                 url: url,
                 data: {
                     datePast: datePast,
-                    auth: Config.authToken
+                    auth: Config.authToken,
+                    dummyMode: Config.dummyMode
                 },
                 dataType: 'json',
                 success: callback,

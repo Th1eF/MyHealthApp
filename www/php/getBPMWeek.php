@@ -13,6 +13,7 @@ if (!$link) {
 
 $datePast = $_GET["datePast"];
 $auth = $_GET["auth"];
+$dummyMode = $_GET["dummyMode"];
 
 $timeArray = array();
 $date = date("M j Y", $datePast/1000);
@@ -35,6 +36,7 @@ if($stmt = $link->prepare($statement)){
     while($row = $result->fetch_assoc()){
         $ID = $row['id'];
     }
+    if($dummyMode == 'true') $ID = 'dummydata';
     $stmt->free_result();
     for($i = 0; $i < 7; $i++){
         $bpmLast = 0;

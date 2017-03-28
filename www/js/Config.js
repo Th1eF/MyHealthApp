@@ -5,6 +5,7 @@ var Config = (function(){
     var uploadData = false;
     var latitude = null;
     var longitude = null;
+    var dummyMode = true;
 
     return{
         authToken: authToken,
@@ -12,6 +13,7 @@ var Config = (function(){
         loggedIn: loggedIn,
         uploadData: uploadData,
         latitude: latitude,
-        longitude: longitude
+        longitude: longitude,
+        dummyMode: dummyMode
     }
 })();

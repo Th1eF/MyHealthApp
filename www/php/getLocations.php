@@ -11,6 +11,7 @@ if (!$link) {
 }
 
 $auth = $_GET["auth"];
+$dummyMode = $_GET["dummyMode"];
 
 $statement = "SELECT id FROM user WHERE auth = ?";
 if($stmt = $link->prepare($statement)){
@@ -20,6 +21,7 @@ if($stmt = $link->prepare($statement)){
     while($row = $result->fetch_assoc()){
         $ID = $row['id'];
     }
+    if($dummyMode == 'true') $ID = 'dummydata';
     $visitsArray = array();
     $avgDurationArray = array();
     $visitCountArray = array();
